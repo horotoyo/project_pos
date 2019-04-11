@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Category;
-use App\Model\Product;
+use App\Model\Payment;
 
-class ProductController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products     	= Product::all();
-        return view('admin.products.index', compact('products'));
+        $payments     = Payment::all();
+        return view('admin.payments.index', compact('payments'));
     }
 
     /**
@@ -26,8 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-    	$categories		= Category::all();
-        return view('admin.products.create', compact('categories'));
+        return view('admin.payments.create');
     }
 
     /**
@@ -38,8 +36,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Product::create($request->all());
-        return redirect('/products');
+        Payment::create($request->all());
+        return redirect('/payments');
     }
 
     /**
@@ -61,9 +59,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product       = Product::find($id);
-    	$categories		= Category::all();
-        return view('admin.products.edit', compact('product', 'categories'));
+        $payment       = Payment::find($id);
+        return view('admin.payments.edit', compact('payment'));
     }
 
     /**
@@ -75,8 +72,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Product::find($id)->update($request->all());
-        return redirect('/products');
+        Payment::find($id)->update($request->all());
+        return redirect('/payments');
     }
 
     /**
@@ -87,7 +84,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::find($id)->delete();
-        return redirect('/products');
+        Payment::find($id)->delete();
+        return redirect('/payments');
     }
 }

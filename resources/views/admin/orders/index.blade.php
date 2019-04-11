@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Products')
+@section('title', 'Orders')
 
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Products
+    Orders
     <small>kedaimasuryo.com</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('home.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a>Products</a></li>
+    <li><a>Orders</a></li>
   </ol>
 </section>
 
@@ -21,7 +21,7 @@
     <div class="col-xs-12">
       <div class="box box-primary">
         <div class="box-header with-border">
-          <a href="{{ route('products.create') }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Create</a>
+          <a href="{{ route('orders.create') }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Create</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -29,10 +29,10 @@
             <thead>
             <tr>
               <th>No</th>
-              <th>Category</th>
-              <th>Product Name</th>
-              <th>Price</th>
-              <th>Status</th>
+              <th>Table Number</th>
+              <th>Total</th>
+              <th>Payment Type</th>
+              <th>Date</th>
               <th>Action</th>
             </tr>
             </thead>
@@ -40,18 +40,18 @@
             @php
             	$nomor = 1;
             @endphp
-            @foreach ($products as $product)
+            @foreach ($orders as $order)
             <tr>
             	<td width="20px">{{ $nomor++ }}</td>
-              <td>{{ $product->category->name }}</td>
-              <td>{{ $product->name }}</td>
-              <td>Rp {{ number_format($product->price, 0, ",", ".") }}</td>
-            	<td>{{ ($product->status)?'Available':'Empty' }}</td>
+              <td>{{ $order->table_number }}</td>
+              <td>Rp {{ number_format($order->total, 0, ",", ".") }}</td>
+              <td>{{ $order->payment->name }}</td>
+            	<td>{{ $order->created_at->format('d M Y') }}</td>
             	<td>
-            		<form method="post" action="{{ route('products.destroy', $product->id) }}">
+            		<form method="post" action="{{ route('orders.destroy', $order->id) }}">
             			@csrf
             			@method('DELETE')
-            			<a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary btn-xs">Edit</a>
+            			<a href="{{ route('orders.edit', $order->id) }}" class="btn btn-primary btn-xs">Edit</a>
             			<button type="submit" class="btn btn-danger btn-xs">Delete</button>
             		</form>
             	</td>

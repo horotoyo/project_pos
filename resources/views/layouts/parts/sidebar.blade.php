@@ -26,7 +26,7 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
       <li class="{{ Request::is('home') || Request::is('home/*') ? 'active' : '' }}">
-        <a href="{{ route('home.index') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+        <a href="{{ route('home.index') }}"><i class="fa fa-dashboard"></i> Dashboard</a>
       </li>
 
       <li class="treeview {{ Request::is('categories') || Request::is('categories/*') || Request::is('products') || Request::is('products/*') ? 'active' : '' }}">
@@ -38,13 +38,22 @@
         </a>
         <ul class="treeview-menu">
           <li class="{{ Request::is('categories') || Request::is('categories/*') ? 'active' : '' }}">
-            <a href="{{ route('categories.index') }}"><i class="fa fa-tags"></i> Categories</a>
+            <a href="{{ route('categories.index') }}"><i class="fa fa-circle-o"></i> Categories</a>
           </li>
           <li class="{{ Request::is('products') || Request::is('products/*') ? 'active' : '' }}">
-            <a href="{{ route('products.index') }}"><i class="fa fa-briefcase"></i> Items</a>
+            <a href="{{ route('products.index') }}"><i class="fa fa-circle-o"></i> Items</a>
           </li>
         </ul>
       </li>
+
+      <li class="{{ Request::is('orders') || Request::is('orders/*') ? 'active' : '' }}">
+        <a href="{{ route('orders.index') }}"><i class="fa fa-shopping-cart"></i> Orders</a>
+      </li>
+
+      <li class="{{ Request::is('payments') || Request::is('payments/*') ? 'active' : '' }}">
+        <a href="{{ route('payments.index') }}"><i class="fa fa-credit-card"></i> Payments</a>
+      </li>
+
     </ul>
   </section>
   <!-- /.sidebar -->

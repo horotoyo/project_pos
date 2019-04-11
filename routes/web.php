@@ -16,3 +16,6 @@ Route::get('/home', function() {
 
 Route::resource('/categories', 'CategoryController');
 Route::resource('/products', 'ProductController');
+Route::resource('/payments', 'PaymentController');
+Route::resource('/orders', 'OrderController');
+Route::resource('/users', 'UserController');

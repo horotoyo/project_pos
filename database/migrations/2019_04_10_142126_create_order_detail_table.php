@@ -20,10 +20,10 @@ class CreateOrderDetailTable extends Migration
             $table->string('product_name', 50);
             $table->string('product_price', 50);
             $table->integer('quantity');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->timestamps();
 
-            $table->foreign('order_id')->references('id')->on('payments')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
