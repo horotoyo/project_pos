@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
@@ -41,7 +41,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user           = new User;
+        $user->name     = $request->name;
+        $user->email    = $request->email;
+        $user->password = bcrypt($request->password);
+
+        $photo          = $request->file('photo');
+        $path           = $photo->store('public/users_img');
+        $user->photo    = $path;
+
+        $user->save();
+
+        return redirect('/users');
     }
 
     /**
@@ -63,7 +74,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user      = User::find($id);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -75,7 +87,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        User::find($id)->update($request->all());
+        return redirect('/users');
     }
 
     /**
@@ -86,6 +99,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+        return redirect('/users');
     }
 }

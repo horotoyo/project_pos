@@ -54,6 +54,10 @@
         <a href="{{ route('payments.index') }}"><i class="fa fa-credit-card"></i> Payments</a>
       </li>
 
+      <li class="{{ Request::is('users') || Request::is('users/*') ? 'active' : '' }}">
+        <a href="{{ route('users.index') }}"><i class="fa fa-users"></i> Users</a>
+      </li>
+
     </ul>
   </section>
   <!-- /.sidebar -->
