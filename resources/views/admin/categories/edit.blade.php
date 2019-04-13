@@ -20,6 +20,9 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="box box-primary">
+        <div class="box-header with-border">
+          <a href="{{ route('categories.index') }}" class="btn btn-warning"><i class="fa fa-arrow-circle-left"></i> Back</a>
+        </div>
 
         <form method="post" action="{{ route('categories.update', $category->id) }}">
           @csrf
@@ -33,8 +36,7 @@
           <!-- /.box-body -->
 
           <div class="box-footer">
-            <a href="{{ route('categories.index') }}" class="btn btn-default">Cancel</a>
-            <button type="submit" class="btn btn-info">Update</button>
+            <button type="submit" class="btn btn-info"><i class="fa fa-send"></i> Update</button>
           </div>
         </form>
       </div>

@@ -20,6 +20,9 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="box box-primary">
+        <div class="box-header with-border">
+          <a href="{{ route('users.index') }}" class="btn btn-warning"><i class="fa fa-arrow-circle-left"></i> Back</a>
+        </div>
 
         <form method="post" action="{{ route('users.store') }}" enctype="multipart/form-data">
           @csrf
@@ -48,8 +51,7 @@
           </div>
 
           <div class="box-footer">
-            <a href="{{ route('users.index') }}" class="btn btn-default">Cancel</a>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-send"></i> Submit</button>
           </div>
         </form>
       </div>
