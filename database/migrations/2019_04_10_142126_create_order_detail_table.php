@@ -17,8 +17,6 @@ class CreateOrderDetailTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('product_id');
-            $table->string('product_name', 50);
-            $table->string('product_price', 50);
             $table->integer('quantity');
             $table->string('note')->nullable();
             $table->integer('subtotal');

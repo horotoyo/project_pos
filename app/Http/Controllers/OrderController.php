@@ -46,8 +46,6 @@ class OrderController extends Controller
         $request->merge([
             'total'         => $request->quantity*$product->price,
             'user_id'       => auth()->user()->id,
-            'product_name'  => $product->name,
-            'product_price' => $product->price,
         ]);
 
         $order              = $request->only('table_number', 'total', 'payment_id', 'user_id');
@@ -58,7 +56,7 @@ class OrderController extends Controller
             'order_id'      => $orderData->id,
         ]);
 
-        $orderDetail        = $request->only('order_id', 'product_id', 'product_name', 'product_price', 'quantity');
+        $orderDetail        = $request->only('order_id', 'product_id', 'quantity');
         OrderDetail::create($orderDetail);
         
         return redirect('/orders');

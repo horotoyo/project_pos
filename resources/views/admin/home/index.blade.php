@@ -56,7 +56,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Order</span>
-          <span class="info-box-number">{{ count($orders) }} <small>Order on this day</small></span>
+          <span class="info-box-number">{{ $orders }} <small>Order on this day</small></span>
           <a href="{{ route('orders.index') }}" class="btn btn-success btn-xs">Show More</a>
         </div>
         <!-- /.info-box-content -->

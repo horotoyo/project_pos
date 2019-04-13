@@ -129,8 +129,8 @@
                                 @foreach ($order->orderDetail as $detail)
                                 <tr>
                                   <td>{{ $no++ }}</td>
-                                  <td>{{ $detail->product_name }}</td>
-                                  <td>Rp {{ number_format($detail->product_price, 0, ",", ".") }}</td>
+                                  <td>{{ $detail->product->name }}</td>
+                                  <td>Rp {{ number_format($detail->product->price, 0, ",", ".") }}</td>
                                   <td>{{ $detail->quantity }}</td>
                                   <td>Rp {{ number_format($detail->subdetail, 0, ",", ".") }}</td>
                                 </tr>
