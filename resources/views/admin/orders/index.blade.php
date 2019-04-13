@@ -74,26 +74,117 @@
             		</form>
 
                  <div class="modal fade" id="{{ $order->id }}">
-                  <div class="modal-dialog">
+                  <div class="modal-dialog" style="width:800px;">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Order Detail Table Number {{ $order->table_number }}</h4>
+                        <h4 class="modal-title"><b><i class="fa fa-shopping-cart"></i> Order Detail</b></h4>
                       </div>
-                      <div class="modal-body text-left">
-                        <div class="row">
-                          <div class="col-md-3">Table Number</div>
-                          <div class="col-md-6">: {{ $order->table_number }}</div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3">Payment Type</div>
-                          <div class="col-md-6">: {{ $order->payment->name }}</div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3">Table Number</div>
-                          <div class="col-md-6">: {{ $order->table_number }}</div>
-                        </div>
+                      <div class="modal-body">
+                          <!-- info row -->
+                          <div class="row invoice-info">
+                            <div class="col-sm-4 invoice-col">
+                              Order at
+                              <address>
+                                <strong>{{ $order->created_at->format('d M Y') }}</strong><br>
+                                <strong>{{ $order->created_at->format('H:m') }} WIB</strong>
+                              </address>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                              Table Number
+                              <address>
+                                <strong>{{ $order->table_number }}</strong><br>
+                              </address>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                              Customer Service
+                              <address>
+                                <strong>{{ $order->user->name }}</strong>
+                              </address>
+                            </div>
+                            <!-- /.col -->
+                          </div>
+                          <!-- /.row -->
+
+                          <!-- Table row -->
+                          <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                              <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                  <th>No</th>
+                                  <th>Product Name</th>
+                                  <th>Price</th>
+                                  <th>Qty</th>
+                                  <th>Subtotal</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @php
+                                  $no = 1;
+                                @endphp
+                                @foreach ($order->orderDetail as $detail)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ $detail->product_name }}</td>
+                                  <td>Rp {{ number_format($detail->product_price, 0, ",", ".") }}</td>
+                                  <td>{{ $detail->quantity }}</td>
+                                  <td>Rp {{ number_format($detail->subdetail, 0, ",", ".") }}</td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                              </table>
+                            </div>
+                            <!-- /.col -->
+                          </div>
+                          <!-- /.row -->
+
+                          <div class="row">
+                            <!-- accepted payments column -->
+                            <div class="col-xs-6">
+                              <p class="lead">Payment Methods: <b>{{ $order->payment->name }}</b></p>
+
+                              <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                @foreach ($order->orderDetail as $view)
+                                  @if (empty($view->note))
+                                    No comments
+                                  @else
+                                    {{ $view->note }}
+                                  @endif
+                                @endforeach
+                              </p>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-xs-6">
+
+                              <div class="table-responsive">
+                                <table class="table">
+                                  <tr>
+                                    <th style="width:50%">Total : </th>
+                                    <td>Rp {{ number_format($order->total, 0, ",", ".") }}</td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                            <!-- /.col -->
+                          </div>
+                          <!-- /.row -->
+
+                          <!-- this row will not appear when printing -->
+                          <div class="row no-print">
+                            <div class="col-xs-12">
+                              <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                              <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
+                              </button>
+                              <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                                <i class="fa fa-download"></i> Generate PDF
+                              </button>
+                            </div>
+                          </div>
+                      
                       </div>
                     </div>
                     <!-- /.modal-content -->
