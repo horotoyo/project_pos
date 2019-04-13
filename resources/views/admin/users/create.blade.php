@@ -7,12 +7,11 @@
 <section class="content-header">
   <h1>
     Create User
-    <small>kedaimasuryo.com</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('home.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="{{ route('users.index') }}">Users</a></li>
-    <li><a>Create User</a></li>
+    <li class="active">Create User</li>
   </ol>
 </section>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Log in</title>
+  <title>DeLatte | Log in</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -22,8 +22,11 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
+  <div class="text-center" style="margin-bottom: 10px">
+    <img src="{{ asset('favicon2.ico') }}" width="60px">
+  </div>
   <div class="login-logo">
-    <a href="{{ asset('adminlte/index2.html') }}"><b>POS</b>.com</a>
+    <a href="{{ asset('adminlte/index2.html') }}"><b>De</b>Latte<small>.com</small></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -32,11 +35,11 @@
     <form action="{{ route('login') }}" method="post">
       @csrf
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" name="email" placeholder="Email">
+        <input type="email" class="form-control" name="email" placeholder="Email" value="suryo@gmail.com">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" name="password" placeholder="Password">
+        <input type="password" class="form-control" name="password" placeholder="Password" value="123">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">

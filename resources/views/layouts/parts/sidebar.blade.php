@@ -26,12 +26,12 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
       <li class="{{ Request::is('home') || Request::is('home/*') ? 'active' : '' }}">
-        <a href="{{ route('home.index') }}"><i class="fa fa-dashboard"></i> Dashboard</a>
+        <a href="{{ route('home.index') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
       </li>
 
       <li class="treeview {{ Request::is('categories') || Request::is('categories/*') || Request::is('products') || Request::is('products/*') ? 'active' : '' }}">
         <a href="#">
-          <i class="fa fa-archive"></i> <span>Products</span>
+          <i class="fa fa-coffee"></i> <span>Products</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -47,15 +47,17 @@
       </li>
 
       <li class="{{ Request::is('orders') || Request::is('orders/*') ? 'active' : '' }}">
-        <a href="{{ route('orders.index') }}"><i class="fa fa-shopping-cart"></i> Orders</a>
+        <a href="{{ route('orders.index') }}"><i class="fa fa-shopping-cart"></i> <span>Orders</span></a>
+      </li>
+
+      <li class="header">SETTING MENU</li>
+
+      <li class="{{ Request::is('users') || Request::is('users/*') ? 'active' : '' }}">
+        <a href="{{ route('users.index') }}"><i class="fa fa-users"></i> <span>Users</span></a>
       </li>
 
       <li class="{{ Request::is('payments') || Request::is('payments/*') ? 'active' : '' }}">
-        <a href="{{ route('payments.index') }}"><i class="fa fa-credit-card"></i> Payments</a>
-      </li>
-
-      <li class="{{ Request::is('users') || Request::is('users/*') ? 'active' : '' }}">
-        <a href="{{ route('users.index') }}"><i class="fa fa-users"></i> Users</a>
+        <a href="{{ route('payments.index') }}"><i class="fa fa-credit-card"></i> <span>Payments</span></a>
       </li>
 
     </ul>

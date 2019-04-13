@@ -7,12 +7,11 @@
 <section class="content-header">
   <h1>
     Create Payment
-    <small>kedaimasuryo.com</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('home.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="{{ route('payments.index') }}">Payments</a></li>
-    <li><a>Edit Payment</a></li>
+    <li class="active">Edit Payment</li>
   </ol>
 </section>
 

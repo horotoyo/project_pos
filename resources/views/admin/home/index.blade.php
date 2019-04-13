@@ -7,82 +7,82 @@
 <section class="content-header">
   <h1>
     Dashboard
-    <small>kedaimasuryo.com</small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{ route('home.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active">Dashboard</li>
   </ol>
 </section>
 
 <!-- Main content -->
 <section class="content">
-  <!-- Small boxes (Stat box) -->
+  <!-- Info boxes -->
   <div class="row">
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-aqua">
-        <div class="inner">
-          <h3>150</h3>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <a href="{{ route('categories.index') }}"><span class="info-box-icon bg-red"><i class="fa fa-tags"></i></span></a>
 
-          <p>New Orders</p>
+        <div class="info-box-content">
+          <span class="info-box-text">Categories</span>
+          <span class="info-box-number">{{ count($categories) }} <small>Items Available</small></span>
+          <a href="{{ route('categories.index') }}" class="btn btn-danger btn-xs">Show More</a>
         </div>
-        <div class="icon">
-          <i class="ion ion-bag"></i>
-        </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <!-- /.info-box-content -->
       </div>
+      <!-- /.info-box -->
     </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-green">
-        <div class="inner">
-          <h3>53<sup style="font-size: 20px">%</sup></h3>
+    <!-- /.col -->
 
-          <p>Bounce Rate</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-stats-bars"></i>
-        </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-      </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-yellow">
-        <div class="inner">
-          <h3>44</h3>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <a href="{{ route('products.index') }}"><span class="info-box-icon bg-aqua"><i class="fa fa-coffee"></i></span></a>
 
-          <p>User Registrations</p>
+        <div class="info-box-content">
+          <span class="info-box-text">Products</span>
+          <span class="info-box-number">{{ count($products) }} <small>Items Available</small></span>
+          <a href="{{ route('products.index') }}" class="btn btn-info btn-xs">Show More</a>
         </div>
-        <div class="icon">
-          <i class="ion ion-person-add"></i>
-        </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <!-- /.info-box-content -->
       </div>
+      <!-- /.info-box -->
     </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-red">
-        <div class="inner">
-          <h3>65</h3>
+    <!-- /.col -->
+    <!-- fix for small devices only -->
+    <div class="clearfix visible-sm-block"></div>
 
-          <p>Unique Visitors</p>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <a href="{{ route('orders.index') }}"><span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span></a>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Order</span>
+          <span class="info-box-number">{{ count($orders) }} <small>Order on this day</small></span>
+          <a href="{{ route('orders.index') }}" class="btn btn-success btn-xs">Show More</a>
         </div>
-        <div class="icon">
-          <i class="ion ion-pie-graph"></i>
-        </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <!-- /.info-box-content -->
       </div>
+      <!-- /.info-box -->
     </div>
-    <!-- ./col -->
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <a href="{{ route('users.index') }}"><span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span></a>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Users</span>
+          <span class="info-box-number">{{ count($users) }} <small>User Account</small></span>
+          <a href="{{ route('users.index') }}" class="btn btn-warning btn-xs">Show More</a>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
   </div>
   <!-- /.row -->
   <!-- Main row -->
   <div class="row">
+    
   </div>
   <!-- /.row (main row) -->
 

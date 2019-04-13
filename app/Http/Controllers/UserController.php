@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Model\User;
 
 class UserController extends Controller
@@ -86,8 +87,53 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        User::find($id)->update($request->all());
+    {        
+
+        // $user           = User::find($id);
+        // $user           = new User;
+
+        // $this->validate($request,[
+        //     'name'      => 'required',
+        //     'email'     => 'required|max:30|email|unique:users,email,'.$id,
+        //     'password'  => 'nullable',
+        //     'photo'     => 'nullable|image',
+        // ]);
+
+        // $user->name     = $request->name;
+        // $user->email    = $request->email;
+        // $photo          = $request->file('photo');
+
+        // if (empty($photo)) {
+        //     $path       = $user->photo;
+        // } else {
+        //     $path       = $photo->store('public/users_img');
+        // }
+
+        // $user->photo    = $path;
+
+        // $user->save();
+        // return redirect('/users');
+
+        $user             = User::find($id);
+        $messages = [
+            'required'      => ':attribute wajib diisi!',
+            'min'           => ':attribute harus diisi minimal :min karakter!',
+            'max'           => ':attribute harus diisi maksimal :max karakter!',
+            'unique'        => ':attribute yang anda isi telah digunakan',
+        ];
+        
+        $this->validate($request,[
+               'nama'           => 'required',
+               'email'          => 'required|email|unique:users,email,'.$id,
+               'password'       => 'nullable|min:5',
+               'photo'          => 'nullable'
+        ], $messages);
+
+        $request->merge([
+            'password'  => bcrypt($request->password),
+        ]);
+
+        $user->update($request->all());
         return redirect('/users');
     }
 

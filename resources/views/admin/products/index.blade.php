@@ -7,11 +7,10 @@
 <section class="content-header">
   <h1>
     Products
-    <small>kedaimasuryo.com</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('home.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a>Products</a></li>
+    <li class="active">Products</li>
   </ol>
 </section>
 

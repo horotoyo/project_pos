@@ -7,12 +7,11 @@
 <section class="content-header">
   <h1>
     Create Category
-    <small>kedaimasuryo.com</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('home.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="{{ route('categories.index') }}">Categories</a></li>
-    <li><a>Create Category</a></li>
+    <li class="active">Create Category</li>
   </ol>
 </section>
 
