@@ -11,12 +11,12 @@
       <option value="{{ $product->id }}">{{ $product->name }}</option>
     @endforeach
   </select>
-</div>
+</div> BERES
 
 <div class="form-group">
   <label for="quantity">Quantity</label>
   <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Enter Quantity of Order Product">
-</div>
+</div> BERES
 
 <div class="form-group">
   <label>Payment Type</label>

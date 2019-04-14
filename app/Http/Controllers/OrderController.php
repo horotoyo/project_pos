@@ -41,23 +41,34 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $product            = Product::find($request->product_id);
+        $product                = Product::find($request->product_id);
+
+        $count                  = count($request->product_id);
+        $qty                    = $request->quantity;
 
         $request->merge([
-            'total'         => $request->quantity*$product->price,
-            'user_id'       => auth()->user()->id,
+            'user_id'           => auth()->user()->id,
         ]);
 
-        $order              = $request->only('table_number', 'total', 'payment_id', 'user_id');
+        $order                  = $request->only('table_number', 'payment_id', 'user_id');
+        $orderData              = Order::create($order);
+        
+        for ($i=0; $i<$count; $i++) {
+            $request->merge([
+                'order_id'      => $orderData->id,
+                'product_id'    => $product[$i]->id,
+                'quantity'      => $qty[$i],
+                'subtotal'      => $product[$i]->price * $qty[$i],
+            ]);
+            $orderDetail        = $request->only('order_id', 'product_id', 'quantity', 'subtotal');
+            OrderDetail::create($orderDetail);
+        }
 
-        $orderData           = Order::create($order);
+        $orderTotal             = OrderDetail::where('order_id', $orderData->id)->sum('subtotal');
 
-        $request->merge([
-            'order_id'      => $orderData->id,
+        Order::find($orderData->id)->update([
+            'total' => $orderTotal,
         ]);
-
-        $orderDetail        = $request->only('order_id', 'product_id', 'quantity');
-        OrderDetail::create($orderDetail);
         
         return redirect('/orders');
     }
