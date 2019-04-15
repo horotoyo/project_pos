@@ -148,13 +148,11 @@
                               <p class="lead">Payment Methods: <b>{{ $order->payment->name }}</b></p>
 
                               <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                @foreach ($order->orderDetail as $view)
-                                  @if (empty($view->note))
+                                  @if (empty($detaill->note))
                                     No comments
                                   @else
-                                    {{ $view->note }}
+                                    {{ $detail->note }}
                                   @endif
-                                @endforeach
                               </p>
                             </div>
                             <!-- /.col -->
