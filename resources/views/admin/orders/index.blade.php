@@ -74,7 +74,7 @@
             		</form>
 
                  <div class="modal fade" id="{{ $order->id }}">
-                  <div class="modal-dialog" style="width:800px;">
+                  <div class="modal-dialog" style="width:900px;">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -117,6 +117,7 @@
                                 <tr>
                                   <th>No</th>
                                   <th>Product Name</th>
+                                  <th>Note</th>
                                   <th>Price</th>
                                   <th>Qty</th>
                                   <th>Subtotal</th>
@@ -130,6 +131,7 @@
                                 <tr>
                                   <td>{{ $no++ }}</td>
                                   <td>{{ $detail->product->name }}</td>
+                                  <td>{{ $detail->note }}</td>
                                   <td>Rp {{ number_format($detail->product->price, 0, ",", ".") }}</td>
                                   <td>{{ $detail->quantity }}</td>
                                   <td>Rp {{ number_format($detail->subtotal, 0, ",", ".") }}</td>
@@ -148,11 +150,7 @@
                               <p class="lead">Payment Methods: <b>{{ $order->payment->name }}</b></p>
 
                               <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                  @if (empty($detaill->note))
-                                    No comments
-                                  @else
-                                    {{ $detail->note }}
-                                  @endif
+                                  If you have a problem with our service, you can complain to our customer service or call 0879878223781.
                               </p>
                             </div>
                             <!-- /.col -->
@@ -174,11 +172,9 @@
                           <!-- this row will not appear when printing -->
                           <div class="row no-print">
                             <div class="col-xs-12">
-                              <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-                              <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
-                              </button>
-                              <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
-                                <i class="fa fa-download"></i> Generate PDF
+                              <a href="{{ route('orders.show', $order->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                              <button type="button" class="btn btn-danger pull-right" style="margin-right: 5px;" data-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-remove"></i> Cancel
                               </button>
                             </div>
                           </div>

@@ -45,6 +45,7 @@ class OrderController extends Controller
 
         $count                  = count($request->product_id);
         $qty                    = $request->quantity;
+        $note                   = $request->note;
 
         $request->merge([
             'user_id'           => auth()->user()->id,
@@ -57,10 +58,11 @@ class OrderController extends Controller
             $request->merge([
                 'order_id'      => $orderData->id,
                 'product_id'    => $product[$i]->id,
+                'note'          => $note[$i],
                 'quantity'      => $qty[$i],
                 'subtotal'      => $product[$i]->price * $qty[$i],
             ]);
-            $orderDetail        = $request->only('order_id', 'product_id', 'quantity', 'subtotal');
+            $orderDetail        = $request->only('order_id', 'product_id', 'note', 'quantity', 'subtotal');
             OrderDetail::create($orderDetail);
         }
 
@@ -81,7 +83,8 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order         = Order::find($id);
+        return view('admin.orders.invoice', compact('order'));
     }
 
     /**
@@ -139,4 +142,5 @@ class OrderController extends Controller
         Order::find($id)->delete();
         return redirect('/orders');
     }
+
 }

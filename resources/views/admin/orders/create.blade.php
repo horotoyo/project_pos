@@ -31,13 +31,13 @@
             <div class="row">
 
               {{-- box list menu --}}
-              <div class="col-md-4">
+              <div class="col-md-8">
               Select Product
 
                 <div class="row product">
 
                   <div id="product-box1">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <select name="product_id[]" class="form-control select2" style="width: 100%;">
                           <option selected="selected" value="">Product name 1</option>
@@ -48,14 +48,20 @@
                       </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                       <div class="form-group">
                         <input type="number" class="form-control" name="quantity[]" id="quantity" placeholder="Qty">
                       </div>
                     </div>
 
-                    <div class="col-md-2">
-                      <a class="btn btn-danger" id="del1">hapus{{-- <i class="fa fa-trash"></i> --}}</a>
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="note[]" id="note" placeholder="Note">
+                      </div>
+                    </div>
+
+                    <div class="col-md-1">
+                      <a class="btn btn-danger" id="del1"><i class="fa fa-trash"></i></a>
                     </div>
                   </div>
                 </div>
@@ -64,27 +70,27 @@
               </div>
 
               {{-- box details --}}
-              <div class="col-md-8">
+              <div class="col-md-4 pull-right">
                 <div class="row">
-                  <div class="col-md-4 pull-right">
+                  <div class="col-md-6">
                     <div class="form-group">
                       Employee
                       <input type="text" class="form-control" value="{{ auth()->user()->name }}" disabled>
                     </div>
                   </div>
 
-                  <div class="col-md-3 pull-right">
+                  <div class="col-md-6">
                     Date Order
                     <input type="text" class="form-control" value="{{ date('d M Y ') }} {{ date('H:m') }}" disabled>
                   </div>
 
-                  <div class="col-md-3 pull-right">
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
                     Table Number
                     <input type="text" name="table_number" class="form-control">
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4 pull-right">
+                  <div class="col-md-6">
                     Payment Method
                     <select name="payment_id" class="form-control select2" style="width: 100%;">
                       <option selected="selected" value="">Choose one</option>
@@ -131,7 +137,7 @@
     var btn   = '#del'+ del++;
 
     $("#addproduct, #addproduct2").click(function(){
-      $(".product").append("<div id='product-box"+ no++ +"'><div class='col-md-6'><div class='form-group'><select name='product_id[]' class='form-control select2' style='width: 100%;'><option selected='selected'>Product name "+ name++ +"</option>@foreach ($products as $product)<option value='{{ $product->id }}'>{{ $product->name }}</option>@endforeach</select></div></div><div class='col-md-4'><div class='form-group'><input type='number' class='form-control' name='quantity[]' id='quantity' placeholder='Qty'></div></div><div class='col-md-2'><a class='btn btn-danger' id='del"+ del++ +"'>hapus</a></div></div>");
+      $(".product").append("<div id='product-box"+ no++ +"'><div class='col-md-4'><div class='form-group'><select name='product_id[]' class='form-control select2' style='width: 100%;'><option selected='selected'>Product name "+ name++ +"</option>@foreach ($products as $product)<option value='{{ $product->id }}'>{{ $product->name }}</option>@endforeach</select></div></div><div class='col-md-2'><div class='form-group'><input type='number' class='form-control' name='quantity[]' id='quantity' placeholder='Qty'></div></div><div class='col-md-5'><div class='form-group'><input type='text' class='form-control' name='note[]' id='note' placeholder='Note'></div></div><div class='col-md-1'><a class='btn btn-danger' id='del"+ del++ +"'><i class='fa fa-trash'></i></a></div></div>");
     });
 
     $('#del1').click(function() {
