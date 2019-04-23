@@ -46,6 +46,8 @@ class OrderController extends Controller
         $count                  = count($request->product_id);
         $qty                    = $request->quantity;
         $note                   = $request->note;
+        $item                   = $request->product_id;
+        // dd($item);
 
         $request->merge([
             'user_id'           => auth()->user()->id,
@@ -57,12 +59,12 @@ class OrderController extends Controller
         for ($i=0; $i<$count; $i++) {
             $request->merge([
                 'order_id'      => $orderData->id,
-                'product_id'    => $product[$i]->id,
-                'note'          => $note[$i],
+                'product_id'    => $item[$i],
                 'quantity'      => $qty[$i],
+                'note'          => $note[$i],
                 'subtotal'      => $product[$i]->price * $qty[$i],
             ]);
-            $orderDetail        = $request->only('order_id', 'product_id', 'note', 'quantity', 'subtotal');
+            $orderDetail        = $request->only('order_id', 'product_id', 'quantity', 'note', 'subtotal');
             OrderDetail::create($orderDetail);
         }
 

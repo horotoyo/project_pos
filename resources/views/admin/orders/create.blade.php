@@ -25,21 +25,23 @@
           {{-- <button type="button" class="btn btn-success" id="addproduct"><i class="fa fa-plus"></i></button> <label>Add new product</label> --}}
         </div>
 
+        
         <form method="post" action="{{ route('orders.store') }}">
           @csrf
           <div class="box-body">
             <div class="row">
 
               {{-- box list menu --}}
+              <div id="app">
               <div class="col-md-8">
               Select Product
 
-                <div class="row product">
+                <div class="row product" v-for="(invoice_product, k) in invoice_products" :key="k">
 
                   <div id="product-box1">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <select name="product_id[]" class="form-control select2" style="width: 100%;">
+                        <select name="product_id[]" class="form-control select2" style="width: 100%;" v-model="invoice_product.product_id">
                           <option selected="selected" value="">Product name 1</option>
                           @foreach ($products as $product)
                             <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -50,23 +52,24 @@
 
                     <div class="col-md-2">
                       <div class="form-group">
-                        <input type="number" class="form-control" name="quantity[]" id="quantity" placeholder="Qty">
+                        <input type="number" class="form-control" name="quantity[]" id="quantity" placeholder="Qty" v-model="invoice_product.quantity">
                       </div>
                     </div>
 
                     <div class="col-md-5">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="note[]" id="note" placeholder="Note">
+                        <input type="text" class="form-control" name="note[]" id="note" placeholder="Note" v-model="invoice_product.note">
                       </div>
                     </div>
 
                     <div class="col-md-1">
-                      <a class="btn btn-danger" id="del1"><i class="fa fa-trash"></i></a>
+                      <button type="button" class="btn btn-danger" @click="deleteRow(k, invoice_product)"><i class="fa fa-trash"></i></button>
                     </div>
                   </div>
                 </div>
                 
-                <button type="button" class="btn btn-success" id="addproduct2"><i class="fa fa-plus"></i></button> <label>Add new product</label>
+                <button type="button" class="btn btn-success" @click="addNewRow"><i class="fa fa-plus"></i></button> <label>Add new product</label>
+              </div>
               </div>
 
               {{-- box details --}}
@@ -110,6 +113,8 @@
             <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-send"></i> Submit</button>
           </div>
         </form>
+
+
       </div>
       <!-- /.box -->
     </div>
@@ -121,7 +126,7 @@
 @endsection
 
 @section('script')
-<script>
+{{-- <script>
   $(function () {
     $('.select2').select2()
   })
@@ -152,5 +157,35 @@
     // });
 
   });
+</script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            invoice_products: [{
+                product_id: '',
+                quantity: '',
+                note: ''
+            }]
+        },
+        methods:{
+            deleteRow(index, invoice_product) {
+                var idx = this.invoice_products.indexOf(invoice_product);
+                console.log(idx, index);
+                if (idx > -1) {
+                    this.invoice_products.splice(idx, 1);
+                }
+                this.calculateTotal();
+            },
+            addNewRow() {
+                this.invoice_products.push({
+                    product_id: '',
+                    quantity: '',
+                    note: ''
+                });
+            }
+        }
+    });  
 </script>
 @endsection
