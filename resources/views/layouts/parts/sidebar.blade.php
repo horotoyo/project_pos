@@ -52,6 +52,10 @@
 
       <li class="header">SETTING MENU</li>
 
+      <li class="{{ Request::is('reports') || Request::is('reports/*') ? 'active' : '' }}">
+        <a href="{{ route('reports.index') }}"><i class="fa fa-file-text-o"></i> <span>Company Report</span></a>
+      </li>
+
       <li class="{{ Request::is('users') || Request::is('users/*') ? 'active' : '' }}">
         <a href="{{ route('users.index') }}"><i class="fa fa-users"></i> <span>Users</span></a>
       </li>
