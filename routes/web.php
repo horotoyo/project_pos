@@ -20,6 +20,11 @@ Route::resource('/users', 'UserController');
 
 Route::get('/reports', 'ReportController@index')->name('reports.index');
 Route::post('/reports', 'ReportController@filter')->name('reports.filter');
-Route::get('/reports/pdf', 'ReportController@exportPdf')->name('reports.pdf');
-Route::post('/reports/pdf', 'ReportController@exportPdf')->name('reports.pdf');
 
+Route::post('/reports/export', 'ReportController@export')->name('reports.export');
+
+// Route::get('/reports/pdf', 'ReportController@exportPdf')->name('reports.pdf');
+// Route::post('/reports/pdf', 'ReportController@exportPdf')->name('reports.pdf');
+
+// Route::get('/reports/pdf', 'ReportController@exportExcel')->name('reports.excel');
+// Route::get('/reports/pdf', 'ReportController@exportExcel')->name('reports.excel');

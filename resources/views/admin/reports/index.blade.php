@@ -42,6 +42,7 @@
           {{-- <a href="{{ route('orders.create') }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Create</a> --}}
           <button class="btn btn-default" data-toggle="modal" data-target="#modal-filter"><i class="fa fa-filter"></i> Filter</button>
           <button class="btn btn-primary" data-toggle="modal" data-target="#modal-download"><i class="fa fa-download"></i> Download</button>
+          {{-- <a href="{{ route('reports.excel') }}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export Excel</a> --}}
 
           {{-- Modal Filter --}}
           <div class="modal fade" id="modal-filter">
@@ -93,7 +94,6 @@
                           </div>
                         </div>
                       </div>
-
                   </form>
 
                 </div>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="modal-body">
                   
-                  <form class="form-horizontal" method="post" action="{{ route('reports.pdf') }}">
+                  <form class="form-horizontal" method="post" action="{{ route('reports.export') }}">
                       @csrf
                       <div class="form-group">
                         <label for="year" class="col-sm-2 control-label">Year</label>
@@ -156,11 +156,11 @@
                         <label for="month" class="col-sm-2 control-label">Type File</label>
                         <div class="col-sm-10" style="padding-top: 7px">
                           <label>
-                            <input type="radio" name="status" value="0" class="minimal">
+                            <input type="radio" name="type" value="0" class="minimal">
                             PDF
                           </label>
                           <label>
-                            <input type="radio" name="status" value="1" class="minimal">
+                            <input type="radio" name="type" value="1" class="minimal">
                             Excel
                           </label>
                           <div style="margin-top: 16px">

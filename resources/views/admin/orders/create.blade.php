@@ -17,6 +17,7 @@
 
 <!-- Main content -->
 <section class="content">
+  <div id="app">
   <div class="row">
     <div class="col-xs-12">
       <div class="box box-primary">
@@ -32,16 +33,15 @@
             <div class="row">
 
               {{-- box list menu --}}
-              <div id="app">
               <div class="col-md-8">
               Select Product
 
-                <div class="row product" v-for="(invoice_product, k) in invoice_products" :key="k">
+                <div class="row product" v-for="(order, index) in orders" :key="index">
 
                   <div id="product-box1">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <select name="product_id[]" class="form-control select2" style="width: 100%;" v-model="invoice_product.product_id">
+                        <select name="product_id[]" class="form-control select2" style="width: 100%;" v-model="order.product_id">
                           <option selected="selected" value="">Product name 1</option>
                           @foreach ($products as $product)
                             <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -52,25 +52,32 @@
 
                     <div class="col-md-2">
                       <div class="form-group">
-                        <input type="number" class="form-control" name="quantity[]" id="quantity" placeholder="Qty" v-model="invoice_product.quantity">
+                        <input type="number" class="form-control" name="quantity[]" id="quantity" placeholder="Qty" v-model="order.quantity">
                       </div>
                     </div>
 
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="note[]" id="note" placeholder="Note" v-model="invoice_product.note">
+                        <input type="text" class="form-control" name="note[]" id="note" placeholder="Note" v-model="order.note">
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="subtotal[]" id="note" placeholder="Subtotal" v-model="order.subtotal"
+                        :value="subtotal(order.product_id, order.quantity, index)" readonly>
                       </div>
                     </div>
 
                     <div class="col-md-1">
-                      <button type="button" class="btn btn-danger" @click="deleteRow(k, invoice_product)"><i class="fa fa-trash"></i></button>
+                      <button type="button" class="btn btn-danger" @click="delDetail(index)"><i class="fa fa-trash"></i></button>
                     </div>
                   </div>
                 </div>
                 
-                <button type="button" class="btn btn-success" @click="addNewRow"><i class="fa fa-plus"></i></button> <label>Add new product</label>
+                <button type="button" class="btn btn-success" @click="addDetail"><i class="fa fa-plus"></i></button> <label>Add new product</label>
               </div>
-              </div>
+              
 
               {{-- box details --}}
               <div class="col-md-4 pull-right">
@@ -86,8 +93,8 @@
                     Date Order
                     <input type="text" class="form-control" value="{{ date('d M Y ') }} {{ date('H:m') }}" disabled>
                   </div>
-
                 </div>
+
                 <div class="row">
                   <div class="col-md-6">
                     Table Number
@@ -103,6 +110,17 @@
                     </select>
                   </div>
                 </div>
+
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      Total Price
+                      <input type="text" class="form-control" style="font-weight: bold;" name="total" :value="total" readonly>
+                    </div>
+                  </div>
+                </div>
+
+
               </div>
 
             </div>
@@ -121,71 +139,63 @@
     <!-- /.col -->
   </div>
   <!-- /.row -->
+  </div>
 </section>
 <!-- /.content -->
 @endsection
 
 @section('script')
-{{-- <script>
-  $(function () {
-    $('.select2').select2()
-  })
-</script>
 
-<script>
-  $(document).ready(function(){
-    
-    var no    = 1;
-    var del   = 1;
-    var name  = 2;
-    var box   = '#product-box'+ no++;
-    var btn   = '#del'+ del++;
-
-    $("#addproduct, #addproduct2").click(function(){
-      $(".product").append("<div id='product-box"+ no++ +"'><div class='col-md-4'><div class='form-group'><select name='product_id[]' class='form-control select2' style='width: 100%;'><option selected='selected'>Product name "+ name++ +"</option>@foreach ($products as $product)<option value='{{ $product->id }}'>{{ $product->name }}</option>@endforeach</select></div></div><div class='col-md-2'><div class='form-group'><input type='number' class='form-control' name='quantity[]' id='quantity' placeholder='Qty'></div></div><div class='col-md-5'><div class='form-group'><input type='text' class='form-control' name='note[]' id='note' placeholder='Note'></div></div><div class='col-md-1'><a class='btn btn-danger' id='del"+ del++ +"'><i class='fa fa-trash'></i></a></div></div>");
-    });
-
-    $('#del1').click(function() {
-      $('#product-box1').remove();
-    });    
-
-    var push = 1;
-    var fade = 1;
-
-    // $('#del'+ push++).click(function() {
-    //   $().remove();
-    // });
-
-  });
-</script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
 <script>
-    var app = new Vue({
-        el: "#app",
-        data: {
-            invoice_products: [{
-                product_id: '',
-                quantity: '',
-                note: ''
-            }]
+    new Vue({
+      el    : '#app',
+      data  : {
+        orders : [
+          {product_id: 0, quantity: 1, subtotal: 0},
+        ]
+      },
+
+      methods : {
+        addDetail() {
+          var orders = {product_id: 0, quantity: 1, subtotal: 0};
+
+          this.orders.push(orders);
         },
-        methods:{
-            deleteRow(index, invoice_product) {
-                var idx = this.invoice_products.indexOf(invoice_product);
-                console.log(idx, index);
-                if (idx > -1) {
-                    this.invoice_products.splice(idx, 1);
-                }
-                this.calculateTotal();
-            },
-            addNewRow() {
-                this.invoice_products.push({
-                    product_id: '',
-                    quantity: '',
-                    note: ''
-                });
-            }
-        }
-    });  
+        delDetail(index) {
+          if(index > 0) {
+            this.orders.splice(index, 1);
+          }
+        },
+        subtotal(product_id, quantity, index) {
+          var subtotal = this.products[product_id] * quantity;
+          this.orders[index].subtotal = subtotal;
+          return subtotal;
+        },
+        formatPrice(value) {
+          // let val = (value/1).toFixed(2).replace('.', ',')
+            // return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            return 'Rp '+value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        },
+      },
+
+      computed: {
+        products() {
+          var products  = [];
+          products[0]   = 0;
+
+          @foreach ($products as $product)
+            products[{{ $product->id }}] = {{ $product->price }}
+          @endforeach
+
+          return products;
+        },
+        total() {
+          return this.orders
+          .map( order => order.subtotal )
+          .reduce( (prev, next) => prev + next );
+        },
+      },
+    });
 </script>
 @endsection

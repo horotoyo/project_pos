@@ -8,8 +8,8 @@
 <div class="container-fluid mt-2">
 
   <div class="">
-      <h2 class="mb-0">Order Report</h2>  
-      <h6 class="align-self-start text-secondary">Date: {{ date('d/m/Y') }}</h6>
+      <h2 class="mb-0">Order Report : {{ $sendDate }}</h2>  
+      <h6 class="align-self-start text-secondary">Date Print: {{ date('d/m/Y') }}</h6>
   </div>
 
       <table class="table table-striped">

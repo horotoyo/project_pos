@@ -41,39 +41,27 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $product                = Product::find($request->product_id);
-
-        $count                  = count($request->product_id);
-        $qty                    = $request->quantity;
-        $note                   = $request->note;
-        $item                   = $request->product_id;
-        // dd($item);
 
         $request->merge([
-            'user_id'           => auth()->user()->id,
+            'user_id'   => auth()->user()->id,
         ]);
 
-        $order                  = $request->only('table_number', 'payment_id', 'user_id');
-        $orderData              = Order::create($order);
-        
-        for ($i=0; $i<$count; $i++) {
-            $request->merge([
-                'order_id'      => $orderData->id,
-                'product_id'    => $item[$i],
-                'quantity'      => $qty[$i],
-                'note'          => $note[$i],
-                'subtotal'      => $product[$i]->price * $qty[$i],
-            ]);
-            $orderDetail        = $request->only('order_id', 'product_id', 'quantity', 'note', 'subtotal');
-            OrderDetail::create($orderDetail);
+        $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'total');
+        $order          = Order::create($dataOrder);
+
+        $dataDetail     = $request->only('product_id', 'quantity', 'note', 'subtotal');
+        $countDetail    = count($dataDetail['product_id']);
+
+        for ($i=0; $i<$countDetail; $i++) { 
+            $detail             = new OrderDetail();
+            $detail->order_id   = $order->id;
+            $detail->product_id = $dataDetail['product_id'][$i];
+            $detail->quantity   = $dataDetail['quantity'][$i];
+            $detail->note       = $dataDetail['note'][$i];
+            $detail->subtotal   = $dataDetail['subtotal'][$i];
+            $detail->save();
         }
 
-        $orderTotal             = OrderDetail::where('order_id', $orderData->id)->sum('subtotal');
-
-        Order::find($orderData->id)->update([
-            'total' => $orderTotal,
-        ]);
-        
         return redirect('/orders');
     }
 
