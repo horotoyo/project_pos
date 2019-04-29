@@ -62,8 +62,8 @@ class ReportController extends Controller
 
         if ($count > 0) {
             $pdf    = PDF::loadView('admin.reports.download-pdf', $data, compact('orders', 'sendDate'));
-            $date   = date('d_m_Y_His');
-            return $pdf->download('reports_'.$date.'.pdf');
+            $time   = date('d_m_Y_His');
+            return $pdf->download('reports_'.$time.'.pdf');
         } else {
             return redirect()->back()->with('success', 'Data is not availabe! You cant download!');
         }
@@ -76,16 +76,17 @@ class ReportController extends Controller
         $sendDate       = $month."/".$request->year;
         $date           = $request->year."-".$month;
         $data           = Order::get();
+        $user_id        = $request->user;
         $orders         = Order::where([
                             ['created_at', 'like', "$date%"],
-                            ['user_id', $request->user],
+                            ['user_id', $user_id],
                         ])->get();
 
         $count = count($orders);
         
         if ($count > 0) {
-        	$date = date('d_m_Y_His');
-            return Excel::download(new OrdersExport, 'orders_'.$date.'.xlsx');
+        	$time = date('d_m_Y_His');
+            return Excel::download(new OrdersExport($date, $user_id, $sendDate), 'orders_'.$time.'.xlsx');
         } else {
             return redirect()->back()->with('success', 'Data is not availabe! You cant download!');
         }

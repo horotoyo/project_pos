@@ -10,7 +10,7 @@
       <table>
         <tr>
           <td colspan="6">
-            <h2>Order Report</h2>  
+            <h2>Order Report : {{ $time }}</h2>  
           </td>
         </tr>
         <tr>

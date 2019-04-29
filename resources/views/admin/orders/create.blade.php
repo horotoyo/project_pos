@@ -64,7 +64,7 @@
 
                     <div class="col-md-2">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="subtotal[]" id="note" placeholder="Subtotal" v-model="order.subtotal"
+                        <input type="text" class="form-control" name="subtotal[]" id="subtotal" placeholder="Subtotal" v-model="order.subtotal"
                         :value="subtotal(order.product_id, order.quantity, index)" readonly>
                       </div>
                     </div>
@@ -75,7 +75,7 @@
                   </div>
                 </div>
                 
-                <button type="button" class="btn btn-success" @click="addDetail"><i class="fa fa-plus"></i></button> <label>Add new product</label>
+                <button type="button" class="btn btn-success" @click="addDetail"><i class="fa fa-plus"></i> Add Product</button>
               </div>
               
 

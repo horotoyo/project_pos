@@ -18,6 +18,13 @@ Sheet::macro('styleCells', function (Sheet $sheet, string $cellRange, array $sty
 
 class OrdersExport implements FromView, ShouldAutoSize, WithEvents
 {
+    public function __construct($date, $user_id, $sendDate)
+    {
+        $this->date         = $date;
+        $this->user_id      = $user_id;
+        $this->sendDate     = $sendDate;
+    }
+
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -26,9 +33,10 @@ class OrdersExport implements FromView, ShouldAutoSize, WithEvents
     {
         return view('admin.reports.download-excel', [
             'orders' => Order::where([
-                            ['created_at', 'like', "2019%"],
-                            ['user_id', 1],
-                        ])->get()
+                            ['created_at', 'like', "$this->date%"],
+                            ['user_id', $this->user_id],
+                        ])->get(),
+            'time' => $this->sendDate,
         ]);
     }
 

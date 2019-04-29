@@ -176,6 +176,7 @@
                               <button type="button" class="btn btn-danger pull-right" style="margin-right: 5px;" data-dismiss="modal" aria-label="Close">
                                 <i class="fa fa-remove"></i> Cancel
                               </button>
+                              <a href="" class="btn btn-primary pull-right" style="margin-right: 10px;"><i class="fa fa-download"></i> Generate PDF</a>
                             </div>
                           </div>
                       
