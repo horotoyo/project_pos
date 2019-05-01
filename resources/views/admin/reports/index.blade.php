@@ -61,8 +61,11 @@
                         <label for="year" class="col-sm-2 control-label">Year</label>
                         <div class="col-sm-10">
                           <select class="form-control select2" style="width: 100%" name="year">
+                            <option value="">All Years</option>
                             @foreach(range(2010, date('Y')) as $row)
-                              <option value="{{$row}}" {{($row==date('Y')) ? 'selected': ''}}>{{ $row }}</option>
+                              <option value="{{$row}}" {{ Input::get('year') == $row ? 'selected' : '' }}>
+                                {{ $row }}
+                              </option>
                             @endforeach
                           </select>
                         </div>
@@ -72,8 +75,9 @@
                         <label for="month" class="col-sm-2 control-label">Month</label>
                         <div class="col-sm-10">
                           <select class="select2 form-control" name="month" style="width: 100%">
+                            <option value="">All Months</option>
                             @for($i=1; $i <= 12; $i++)
-                              <option value="{{$i}}" {{($i==date('n')) ? 'selected': ''}}>
+                              <option value="{{$i}}" {{ Input::get('month') == $i ? 'selected' : '' }}>
                                 {{ date('F', strtotime(date('Y').'-'.$i.'-01')) }}
                               </option>
                             @endfor
@@ -85,8 +89,9 @@
                         <label for="user" class="col-sm-2 control-label">Cashier</label>
                         <div class="col-sm-10">
                           <select class="form-control select2" style="width: 100%" name="user">
+                            <option value="">All Cashiers</option>
                             @foreach($users as $user)
-                              <option value="{{ $user->id }}">{{ $user->name }}</option>
+                              <option value="{{ $user->id }}" {{ Input::get('user') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                             @endforeach
                           </select>
                           <div style="margin-top: 16px">
@@ -121,8 +126,9 @@
                         <label for="year" class="col-sm-2 control-label">Year</label>
                         <div class="col-sm-10">
                           <select class="form-control select2" style="width: 100%" name="year">
+                            <option value="">All Years</option>
                             @foreach(range(2010, date('Y')) as $row)
-                              <option value="{{$row}}" {{($row==date('Y')) ? 'selected': ''}}>{{ $row }}</option>
+                              <option value="{{$row}}" {{ Input::get('year') == $row ? 'selected' : '' }}>{{ $row }}</option>
                             @endforeach
                           </select>
                         </div>
@@ -132,8 +138,9 @@
                         <label for="month" class="col-sm-2 control-label">Month</label>
                         <div class="col-sm-10">
                           <select class="select2 form-control" name="month" style="width: 100%">
+                            <option value="">All Month</option>
                             @for($i=1; $i <= 12; $i++)
-                              <option value="{{$i}}" {{($i==date('n')) ? 'selected': ''}}>
+                              <option value="{{$i}}" {{ Input::get('month') == $i ? 'selected' : '' }}>
                                 {{ date('F', strtotime(date('Y').'-'.$i.'-01')) }}
                               </option>
                             @endfor
@@ -145,8 +152,9 @@
                         <label for="user" class="col-sm-2 control-label">CS</label>
                         <div class="col-sm-10">
                           <select class="form-control select2" style="width: 100%" name="user">
+                            <option value="">All Cashier</option>
                             @foreach($users as $user)
-                              <option value="{{ $user->id }}">{{ $user->name }}</option>
+                              <option value="{{ $user->id }}" {{ Input::get('user') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                             @endforeach
                           </select>
                         </div>

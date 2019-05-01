@@ -9,7 +9,6 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
-
 use \Maatwebsite\Excel\Sheet;
 
 Sheet::macro('styleCells', function (Sheet $sheet, string $cellRange, array $style) {
@@ -18,11 +17,11 @@ Sheet::macro('styleCells', function (Sheet $sheet, string $cellRange, array $sty
 
 class OrdersExport implements FromView, ShouldAutoSize, WithEvents
 {
-    public function __construct($date, $user_id, $sendDate)
+    public function __construct($y, $m, $u)
     {
-        $this->date         = $date;
-        $this->user_id      = $user_id;
-        $this->sendDate     = $sendDate;
+        $this->y     = $y;
+        $this->m     = $m;
+        $this->u     = $u;
     }
 
     /**
@@ -31,13 +30,24 @@ class OrdersExport implements FromView, ShouldAutoSize, WithEvents
 
     public function view(): View
     {
-        return view('admin.reports.download-excel', [
-            'orders' => Order::where([
-                            ['created_at', 'like', "$this->date%"],
-                            ['user_id', $this->user_id],
-                        ])->get(),
-            'time' => $this->sendDate,
-        ]);
+
+        $orders  = new Order();
+
+        if ($this->y) {
+            $orders = $orders->whereYear('created_at', $this->y);
+        }
+        
+        if ($this->m) {
+            $orders = $orders->whereMonth('created_at', $this->m);
+        }
+        
+        if ($this->u) {
+            $orders = $orders->where('user_id', $this->u);
+        }
+
+        $orders = $orders->get();
+
+        return view('admin.reports.download-excel', compact('orders'));
     }
 
 	public function registerEvents(): array

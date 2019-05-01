@@ -12,7 +12,7 @@ use PDF;
 use App\Exports\OrdersExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-
+use Illuminate\Support\Facades\DB;
 
 
 class ReportController extends Controller
@@ -26,13 +26,26 @@ class ReportController extends Controller
 
     public function filter(Request $request)
     {
-        $month          = sprintf("%02d", $request->month);
-        $date           = $request->year."-".$month;
-        $orders         = Order::where([
-                            ['created_at', 'like', "$date%"],
-                            ['user_id', $request->user],
-                        ])->get();
-        $users          = User::all();
+        $y      = $request->get('year');
+        $m      = $request->get('month');
+        $u      = $request->get('user');
+        
+        $users  = User::all();
+        $orders = new Order();
+
+        if ($y) {
+            $orders = $orders->whereYear('created_at', $y);
+        }
+        
+        if ($m) {
+            $orders = $orders->whereMonth('created_at', $m);
+        }
+        
+        if ($u) {
+            $orders = $orders->where('user_id', $u);
+        }
+      
+        $orders = $orders->paginate(10);
         return view('admin.reports.index', compact('orders', 'users'));
     }
 
@@ -49,46 +62,38 @@ class ReportController extends Controller
 
     public function exportPdf(Request $request)
     {   
-        $month          = sprintf("%02d", $request->month);
-        $sendDate		= $month."/".$request->year;
-        $date           = $request->year."-".$month;
-        $data           = Order::get();
-        $orders         = Order::where([
-                            ['created_at', 'like', "$date%"],
-                            ['user_id', $request->user],
-                        ])->get();
+        $y      = $request->year;
+        $m      = $request->month;
+        $u      = $request->user;
+        
+        $users  = User::all();
+        $orders = new Order();
 
-        $count = count($orders);
-
-        if ($count > 0) {
-            $pdf    = PDF::loadView('admin.reports.download-pdf', $data, compact('orders', 'sendDate'));
-            $time   = date('d_m_Y_His');
-            return $pdf->download('reports_'.$time.'.pdf');
-        } else {
-            return redirect()->back()->with('success', 'Data is not availabe! You cant download!');
+        if ($y) {
+            $orders = $orders->whereYear('created_at', $y);
+        }
+        
+        if ($m) {
+            $orders = $orders->whereMonth('created_at', $m);
+        }
+        
+        if ($u) {
+            $orders = $orders->where('user_id', $u);
         }
 
+        $orders = $orders->get();
+        $pdf    = PDF::loadView('admin.reports.download-pdf', $orders, compact('orders'));
+        $time   = date('d_m_Y_His');
+        return $pdf->download('reports_'.$time.'.pdf');
     }
 
     public function exportExcel(Request $request)
     {
-        $month          = sprintf("%02d", $request->month);
-        $sendDate       = $month."/".$request->year;
-        $date           = $request->year."-".$month;
-        $data           = Order::get();
-        $user_id        = $request->user;
-        $orders         = Order::where([
-                            ['created_at', 'like', "$date%"],
-                            ['user_id', $user_id],
-                        ])->get();
-
-        $count = count($orders);
+        $y = $request->year;
+        $m = $request->month;
+        $u = $request->user;    
         
-        if ($count > 0) {
-        	$time = date('d_m_Y_His');
-            return Excel::download(new OrdersExport($date, $user_id, $sendDate), 'orders_'.$time.'.xlsx');
-        } else {
-            return redirect()->back()->with('success', 'Data is not availabe! You cant download!');
-        }
+        $time = date('d_m_Y_His');
+        return Excel::download(new OrdersExport($y, $m, $u), 'orders_'.$time.'.xlsx');
     }
 }
