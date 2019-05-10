@@ -122,7 +122,7 @@
                         <span class="input-group-addon">
                           <i class="fa fa-money"></i>
                         </span>
-                        <input type="text" name="discount" class="form-control valid">
+                        <input type="number" name="discount" class="form-control valid" v-model="discount">
                       </div>
                     </div>
                   </div>
@@ -167,7 +167,8 @@
       data  : {
         orders : [
           {product_id: 0, product_name:"", product_price: 0, quantity: 1, subtotal: 0, note:""},
-        ]
+        ],
+          discount : 0,
       },
 
       methods : {
@@ -224,9 +225,11 @@
           return products;
         },
         total() {
-          return this.orders
+          var total = this.orders
           .map( order => order.subtotal )
           .reduce( (prev, next) => prev + next );
+
+          return total - (total * this.discount / 100);
         },
       },
     });

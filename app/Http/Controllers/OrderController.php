@@ -44,9 +44,15 @@ class OrderController extends Controller
         $request->merge([
             'user_id'   => auth()->user()->id,
         ]);
+        // dd($request->discount);
 
-        $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'total');
-        $order          = Order::create($dataOrder);
+        if ($request->discount == null) {
+            $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'total');
+            $order          = Order::create($dataOrder);
+        } else {
+            $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'discount', 'total');
+            $order          = Order::create($dataOrder);
+        }
 
         $dataDetail     = $request->only('product_id', 'product_name', 'product_price', 'quantity', 'note', 'subtotal');
         $countDetail    = count($dataDetail['product_id']);
@@ -111,7 +117,7 @@ class OrderController extends Controller
             'product_price' => $product->price,
         ]);
 
-        $order              = $request->only('table_number', 'total', 'payment_id', 'user_id');
+        $order              = $request->only('table_number', 'discount', 'total', 'payment_id', 'user_id');
 
         $orderData          = Order::find($id)->update($order);
 

@@ -19,7 +19,7 @@ class CreateOrderDetailTable extends Migration
             $table->string('product_name', 50);
             $table->integer('product_price');
             $table->integer('quantity');
-            $table->string('note', 100);
+            $table->string('note', 100)->nullable();
             $table->integer('subtotal');
             $table->timestamps();
 

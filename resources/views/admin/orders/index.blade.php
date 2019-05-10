@@ -159,6 +159,10 @@
                               <div class="table-responsive">
                                 <table class="table">
                                   <tr>
+                                    <th style="width:50%">Discount : </th>
+                                    <td>{{ number_format($order->discount) }}%</td>
+                                  </tr>
+                                  <tr>
                                     <th style="width:50%">Total : </th>
                                     <td>Rp {{ number_format($order->total, 0, ",", ".") }}</td>
                                   </tr>
