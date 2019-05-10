@@ -48,7 +48,10 @@
                           @endforeach
                         </select>
                       </div>
+                    <input type="hidden" name="product_name[]" :value="product_name(order.product_id, index)">
+                    <input type="hidden" name="product_price[]" :value="product_price(order.product_id, index)">
                     </div>
+
 
                     <div class="col-md-2">
                       <div class="form-group">
@@ -114,6 +117,17 @@
                 <div class="row" style="margin-top: 10px;">
                   <div class="col-md-6">
                     <div class="form-group">
+                      Discount
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="fa fa-money"></i>
+                        </span>
+                        <input type="text" name="discount" class="form-control valid">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
                       Total Price
                       <input type="text" class="form-control" style="font-weight: bold;" name="total" :value="total" readonly>
                     </div>
@@ -152,13 +166,13 @@
       el    : '#app',
       data  : {
         orders : [
-          {product_id: 0, quantity: 1, subtotal: 0},
+          {product_id: 0, product_name:"", product_price: 0, quantity: 1, subtotal: 0, note:""},
         ]
       },
 
       methods : {
         addDetail() {
-          var orders = {product_id: 0, quantity: 1, subtotal: 0};
+          var orders = {product_id: 0, product_name:"", product_price: 0, quantity: 1, subtotal: 0, note:""};
 
           this.orders.push(orders);
         },
@@ -177,6 +191,16 @@
             // return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
             return 'Rp '+value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         },
+        product_price(product_id, index) {
+          var product_price = this.products[product_id];
+          this.orders[index].product_price = product_price;
+          return product_price;
+        },
+        product_name(product_id, index) {
+          var product_name = this.names[product_id];
+          this.orders[index].product_name = product_name;
+          return product_name;
+        },
       },
 
       computed: {
@@ -188,6 +212,15 @@
             products[{{ $product->id }}] = {{ $product->price }}
           @endforeach
 
+          return products;
+        },
+        names() {
+          var products = [];
+          products[0] = 0;
+
+          @foreach($products as $product)
+            products[ {{ $product->id }} ] = "{{ $product->name }}"
+          @endforeach
           return products;
         },
         total() {

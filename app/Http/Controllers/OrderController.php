@@ -41,7 +41,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->merge([
             'user_id'   => auth()->user()->id,
         ]);
@@ -49,16 +48,17 @@ class OrderController extends Controller
         $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'total');
         $order          = Order::create($dataOrder);
 
-        $dataDetail     = $request->only('product_id', 'quantity', 'note', 'subtotal');
+        $dataDetail     = $request->only('product_id', 'product_name', 'product_price', 'quantity', 'note', 'subtotal');
         $countDetail    = count($dataDetail['product_id']);
 
         for ($i=0; $i<$countDetail; $i++) { 
-            $detail             = new OrderDetail();
-            $detail->order_id   = $order->id;
-            $detail->product_id = $dataDetail['product_id'][$i];
-            $detail->quantity   = $dataDetail['quantity'][$i];
-            $detail->note       = $dataDetail['note'][$i];
-            $detail->subtotal   = $dataDetail['subtotal'][$i];
+            $detail                 = new OrderDetail();
+            $detail->order_id       = $order->id;
+            $detail->product_name   = $dataDetail['product_name'][$i];
+            $detail->product_price  = $dataDetail['product_price'][$i];
+            $detail->quantity       = $dataDetail['quantity'][$i];
+            $detail->note           = $dataDetail['note'][$i];
+            $detail->subtotal       = $dataDetail['subtotal'][$i];
             $detail->save();
         }
 
