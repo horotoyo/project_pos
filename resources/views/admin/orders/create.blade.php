@@ -115,6 +115,20 @@
                 </div>
 
                 <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      Customer Email
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="fa fa-envelope-o"></i>
+                        </span>
+                        <input type="text" name="customer_email" class="form-control" placeholder="ex: john@gmail.com">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       Discount

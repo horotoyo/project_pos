@@ -56,6 +56,9 @@
         </div>
         <!-- /.col -->
       </div>
+        <p style="text-align: center;">OR</p>
+        <a href="{{ url('socialauth/github') }}" class="btn btn-block btn-social btn-github btn-flat">
+          <i class="fa fa-github"></i> Sign in using Github</a>
     </form>
 
   </div>

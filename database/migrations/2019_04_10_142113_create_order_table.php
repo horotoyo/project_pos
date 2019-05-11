@@ -20,6 +20,7 @@ class CreateOrderTable extends Migration
             $table->integer('total')->nullable();
             $table->unsignedInteger('payment_id');
             $table->unsignedInteger('user_id');
+            $table->string('customer_email', 50)->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

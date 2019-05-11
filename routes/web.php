@@ -28,3 +28,6 @@ Route::post('/reports/export', 'ReportController@export')->name('reports.export'
 
 // Route::get('/reports/pdf', 'ReportController@exportExcel')->name('reports.excel');
 // Route::get('/reports/pdf', 'ReportController@exportExcel')->name('reports.excel');
+
+Route::get('socialauth/{provider}', 'SocialAuthController@redirectToProvider');
+Route::get('socialauth/{provider}/callback', 'SocialAuthController@handleProviderCallback');

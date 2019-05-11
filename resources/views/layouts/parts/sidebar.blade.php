@@ -53,7 +53,7 @@
       <li class="header">SETTING MENU</li>
 
       <li class="{{ Request::is('reports') || Request::is('reports/*') ? 'active' : '' }}">
-        <a href="{{ route('reports.index') }}"><i class="fa fa-file-text-o"></i> <span>Company Report</span></a>
+        <a href="{{ route('reports.index') }}"><i class="fa fa-file-text"></i> <span>Company Report</span></a>
       </li>
 
       <li class="{{ Request::is('users') || Request::is('users/*') ? 'active' : '' }}">
@@ -61,7 +61,7 @@
       </li>
 
       <li class="{{ Request::is('payments') || Request::is('payments/*') ? 'active' : '' }}">
-        <a href="{{ route('payments.index') }}"><i class="fa fa-credit-card"></i> <span>Payments</span></a>
+        <a href="{{ route('payments.index') }}"><i class="fa fa-cc-visa"></i> <span>Payments</span></a>
       </li>
 
     </ul>

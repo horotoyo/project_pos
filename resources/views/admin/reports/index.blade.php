@@ -278,9 +278,9 @@
                                 @foreach ($order->orderDetail as $detail)
                                 <tr>
                                   <td>{{ $no++ }}</td>
-                                  <td>{{ $detail->product->name }}</td>
+                                  <td>{{ $detail->product_name }}</td>
                                   <td>{{ $detail->note }}</td>
-                                  <td>Rp {{ number_format($detail->product->price, 0, ",", ".") }}</td>
+                                  <td>Rp {{ number_format($detail->product_price, 0, ",", ".") }}</td>
                                   <td>{{ $detail->quantity }}</td>
                                   <td>Rp {{ number_format($detail->subtotal, 0, ",", ".") }}</td>
                                 </tr>
@@ -306,6 +306,10 @@
 
                               <div class="table-responsive">
                                 <table class="table">
+                                  <tr>
+                                    <th style="width:50%">Discount : </th>
+                                    <td>{{ number_format($order->discount) }}%</td>
+                                  </tr>
                                   <tr>
                                     <th style="width:50%">Total : </th>
                                     <td>Rp {{ number_format($order->total, 0, ",", ".") }}</td>

@@ -47,10 +47,10 @@ class OrderController extends Controller
         // dd($request->discount);
 
         if ($request->discount == null) {
-            $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'total');
+            $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'total', 'email');
             $order          = Order::create($dataOrder);
         } else {
-            $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'discount', 'total');
+            $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'discount', 'total', 'email');
             $order          = Order::create($dataOrder);
         }
 
