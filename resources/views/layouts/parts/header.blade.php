@@ -18,7 +18,13 @@
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ Storage::url(auth()->user()->photo) }}" class="user-image" alt="User Image">
+            <img src="
+            @if (empty(auth()->user()->photo))
+              {{ auth()->user()->avatar }}
+            @else
+              {{ Storage::url(auth()->user()->photo) }}
+            @endif
+            " class="user-image" alt="User Image">
             <span class="hidden-xs">{{ auth()->user()->name }}</span>
           </a>
           <ul class="dropdown-menu">

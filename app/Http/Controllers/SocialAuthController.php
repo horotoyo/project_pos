@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Socialite;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 use App\Model\Category;
 use App\Model\Product;
 use App\Model\Order;
@@ -19,16 +22,15 @@ class SocialAuthController extends Controller
 
 	public function handleProviderCallback($provider)
 	{
-    	$user 		= Socialite::driver($provider)->user();
+    	$user 		= Socialite::driver($provider)->stateless()->user();
     	$authUser	= User::firstOrNew(['provider_id'=>$user->id]);
     	
-    	// dd($user);
 
     	$authUser->name 		= $user->nickname;
     	$authUser->email 		= $user->email;
     	$authUser->provider		= $provider;
     	$authUser->provider_id	= $user->id;
-    	$authUser->photo		= $user->avatar;
+    	$authUser->avatar		= $user->avatar;
 
     	$authUser->save();
 
