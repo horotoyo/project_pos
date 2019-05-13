@@ -30,7 +30,13 @@
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
-              <img src="{{ Storage::url(auth()->user()->photo) }}" class="img-circle" alt="User Image">
+              <img src="
+              @if (empty(auth()->user()->photo))
+                {{ auth()->user()->avatar }}
+              @else
+                {{ Storage::url(auth()->user()->photo) }}
+              @endif
+              " class="img-circle" alt="User Image">
 
               <p>
                 {{ auth()->user()->name }}

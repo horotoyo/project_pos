@@ -5,7 +5,7 @@
     <div class="user-panel">
       <div class="pull-left image">
         <img src="
-        @if (empty(auth()->user()->photo))
+        @if (auth()->user()->photo == null)
           {{ auth()->user()->avatar }}
         @else
           {{ Storage::url(auth()->user()->photo) }}

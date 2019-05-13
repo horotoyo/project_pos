@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
     {
         $data = [
         	'name'			=> 'Suryo Widiyanto',
-    		'email'			=> 'suryo@gmail.com',
+    		'email'			=> 'suryowidiyantogm@gmail.com',
             'password'      => bcrypt('123'),
     		'photo'   		=> 'public/users_img/123.jpg',
     		'created_at'	=> now(),

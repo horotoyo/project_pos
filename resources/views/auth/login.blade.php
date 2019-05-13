@@ -35,7 +35,7 @@
     <form action="{{ route('login') }}" method="post">
       @csrf
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" name="email" placeholder="Email" value="suryo@gmail.com">
+        <input type="email" class="form-control" name="email" placeholder="Email" value="suryowidiyantogm@gmail.com">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
@@ -57,8 +57,12 @@
         <!-- /.col -->
       </div>
         <p style="text-align: center;">OR</p>
+        <a href="{{ url('socialauth/facebook') }}" class="btn btn-block btn-social btn-facebook btn-flat">
+          <i class="fa fa-facebook"></i> Sign in using Facebook</a>
         <a href="{{ url('socialauth/github') }}" class="btn btn-block btn-social btn-github btn-flat">
           <i class="fa fa-github"></i> Sign in using Github</a>
+        {{-- <a href="{{ url('socialauth/github') }}" class="btn btn-block btn-social btn-github btn-flat">
+          <i class="fa fa-github"></i> Sign in using Github</a> --}}
     </form>
 
   </div>
