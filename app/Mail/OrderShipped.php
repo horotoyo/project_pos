@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Model\Order;
 
 class OrderShipped extends Mailable
 {
@@ -16,9 +17,9 @@ class OrderShipped extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($id)
     {
-        //
+        $this->id       = $id;
     }
 
     /**
@@ -28,6 +29,9 @@ class OrderShipped extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        // return $this->view('admin.order.invoice');
+        $order = Order::find($this->id);
+        return $this->from('suryowidiyantogm@gmail.com')
+                    ->view('admin.orders.invoice', compact('order'));
     }
 }

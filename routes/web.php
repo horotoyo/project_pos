@@ -31,3 +31,5 @@ Route::post('/reports/export', 'ReportController@export')->name('reports.export'
 
 Route::get('socialauth/{provider}', 'SocialAuthController@redirectToProvider');
 Route::get('socialauth/{provider}/callback', 'SocialAuthController@handleProviderCallback');
+
+Route::post('/sendmail/{id}', 'SendMailController@sendMail')->name('send.mail');

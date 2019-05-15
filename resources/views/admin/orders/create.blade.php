@@ -122,7 +122,7 @@
                         <span class="input-group-addon">
                           <i class="fa fa-envelope-o"></i>
                         </span>
-                        <input type="text" name="customer_email" class="form-control" placeholder="ex: john@gmail.com">
+                        <input type="text" name="email" class="form-control" placeholder="ex: john@gmail.com">
                       </div>
                     </div>
                   </div>

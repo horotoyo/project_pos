@@ -63,9 +63,9 @@
 	      @foreach ($order->orderDetail as $detail)
 	      <tr>
 	        <td>{{ $no++ }}</td>
-	        <td>{{ $detail->product->name }}</td>
+	        <td>{{ $detail->product_name }}</td>
 	        <td>{{ $detail->note }}</td>
-	        <td>Rp {{ number_format($detail->product->price, 0, ",", ".") }}</td>
+	        <td>Rp {{ number_format($detail->product_price, 0, ",", ".") }}</td>
 	        <td>{{ $detail->quantity }}</td>
 	        <td>Rp {{ number_format($detail->subtotal, 0, ",", ".") }}</td>
 	      </tr>

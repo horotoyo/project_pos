@@ -46,11 +46,13 @@ class OrderController extends Controller
         ]);
         // dd($request->discount);
 
+        // dd($request->email);
+
         if ($request->discount == null) {
-            $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'total', 'email');
+            $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'email', 'total');
             $order          = Order::create($dataOrder);
         } else {
-            $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'discount', 'total', 'email');
+            $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'discount', 'email', 'total');
             $order          = Order::create($dataOrder);
         }
 
@@ -68,7 +70,7 @@ class OrderController extends Controller
             $detail->save();
         }
 
-        return redirect('/orders');
+        return redirect('/orders')->with('success', 'Success input data!');
     }
 
     /**

@@ -36,6 +36,12 @@
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
+      @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+              <button type="button" class="close" data-dismiss="alert">×</button> 
+              <strong>{{ $message }}</strong>
+        </div>
+      @endif
       <div class="box box-primary">
         <div class="box-header with-border">
           <a href="{{ route('orders.create') }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Create</a>
@@ -84,7 +90,7 @@
                       <div class="modal-body">
                           <!-- info row -->
                           <div class="row invoice-info">
-                            <div class="col-sm-4 invoice-col">
+                            <div class="col-sm-3 invoice-col">
                               Order at
                               <address>
                                 <strong>{{ $order->created_at->format('d M Y') }}</strong><br>
@@ -92,15 +98,22 @@
                               </address>
                             </div>
                             <!-- /.col -->
-                            <div class="col-sm-4 invoice-col">
+                            <div class="col-sm-3 invoice-col">
                               Table Number
                               <address>
                                 <strong>{{ $order->table_number }}</strong><br>
                               </address>
                             </div>
                             <!-- /.col -->
-                            <div class="col-sm-4 invoice-col">
-                              Customer Service
+                            <div class="col-sm-3 invoice-col">
+                              Customer Email
+                              <address>
+                                <strong>{{ $order->email }}</strong>
+                              </address>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-3 invoice-col">
+                              Chasieer
                               <address>
                                 <strong>{{ $order->user->name }}</strong>
                               </address>
@@ -176,11 +189,15 @@
                           <!-- this row will not appear when printing -->
                           <div class="row no-print">
                             <div class="col-xs-12">
-                              <a href="{{ route('orders.show', $order->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-                              <button type="button" class="btn btn-danger pull-right" style="margin-right: 5px;" data-dismiss="modal" aria-label="Close">
-                                <i class="fa fa-remove"></i> Cancel
-                              </button>
-                              <a href="" class="btn btn-primary pull-right" style="margin-right: 10px;"><i class="fa fa-download"></i> Generate PDF</a>
+                              <form method="post" action="{{ route('send.mail', $order->id) }}">
+                                @csrf
+                                <a href="{{ route('orders.show', $order->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-envelope"></i> Send Mail</button>
+                                <button type="button" class="btn btn-danger pull-right" style="margin-right: 5px;" data-dismiss="modal" aria-label="Close">
+                                  <i class="fa fa-remove"></i> Cancel
+                                </button>
+{{--                                 <a href="" class="btn btn-primary pull-right" style="margin-right: 10px;"><i class="fa fa-download"></i> Generate PDF</a> --}}
+                              </form>
                             </div>
                           </div>
                       
