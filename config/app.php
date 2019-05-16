@@ -178,6 +178,8 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -234,6 +236,9 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Input' => Illuminate\Support\Facades\Input::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];

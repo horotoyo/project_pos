@@ -12,6 +12,8 @@ Route::post('/logout', 'AuthController@logout')->name('logout');
 //index home admin
 Route::get('/home', 'HomeController@index')->name('home.index');
 
+Route::get('/products/data', 'ProductController@data')->name('products.data');
+
 Route::resource('/categories', 'CategoryController');
 Route::resource('/products', 'ProductController');
 Route::resource('/payments', 'PaymentController');

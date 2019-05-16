@@ -41,10 +41,10 @@
 <script src="{{ asset('adminlte/dist/js/demo.js') }}"></script>
 
 <!-- DataTables -->
-<script src="{{ asset('adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+{{-- <script src="{{ asset('adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script> --}}
 <!-- page script -->
-<script>
+{{-- <script>
   $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({
@@ -56,4 +56,4 @@
       'autoWidth'   : false
     })
   })
-</script>
+</script> --}}

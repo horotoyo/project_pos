@@ -5,19 +5,63 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Category;
 use App\Model\Product;
+use DataTables;
+use Form;
 
 class ProductController extends Controller
 {
+    private $folder = 'admin.products';
+    private $uri    = 'products';
+    private $title  = 'Product';
+    private $desc   = 'Description';
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $products     	= Product::get();
-        return view('admin.products.index', compact('products'));
+        $data['title']  = $this->title;
+        $data['ajax']   = route('products.data');
+        $data['create'] = route('products.create');
+        return view('admin.products.index', $data);
     }
+
+    public function data(Request $request)
+    {
+         
+            $data = Product::select([
+                'id', 'category_id', 'name', 
+                'price', 'status'
+            ]);
+            return DataTables::of($data)
+                ->editColumn('category_id', function ($index) {
+                    return isset($index->category->name) ? $index->category->name : '-';
+                })
+                ->editColumn('status', function ($index) {
+                    if($index->status == 0) {
+                        return '<span class="label label-warning">Not-available</span>';
+                    } elseif ($index->status == 1) {
+                        return '<span class="label label-success">Available</span>';
+                    }
+                })
+                ->editColumn('price', function ($index) {
+                    return 'Rp '.number_format($index->price, 0, ",", ".");
+                })
+                ->addColumn('action', function ($index) {
+                    $tag = Form::open(array("url" => route('products.destroy',$index->id), "method" => "DELETE"));
+                    $tag .= "<a href=".route('products.edit', $index->id)." class='btn btn-primary btn-xs' style='margin-right:0.3vw'>Edit</a>";
+                    $tag .= "<button type='submit' class='delete btn btn-danger btn-xs'>Delete</button>";
+                    $tag .= Form::close();
+                    return $tag;
+                })
+                ->rawColumns(['id', 'status', 'action'])
+                ->make(true);
+        
+    }
+
 
     /**
      * Show the form for creating a new resource.
