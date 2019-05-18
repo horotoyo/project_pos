@@ -10,11 +10,6 @@ use Form;
 
 class ProductController extends Controller
 {
-    private $folder = 'admin.products';
-    private $uri    = 'products';
-    private $title  = 'Product';
-    private $desc   = 'Description';
-
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +17,6 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products     	= Product::get();
-        $data['title']  = $this->title;
         $data['ajax']   = route('products.data');
         $data['create'] = route('products.create');
         return view('admin.products.index', $data);

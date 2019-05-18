@@ -27,7 +27,7 @@
           <table id="table1" class="table table-bordered table-hover">
             <thead>
             <tr>
-              <th>No</th>
+              <th width="5%">No</th>
               <th>Category</th>
               <th>Product Name</th>
               <th>Price</th>
@@ -62,13 +62,13 @@
             processing: true,
             serverSide: true,
             ajax: '{{$ajax}}',
-            order: [[5,'desc']],
+            order: [[0,'desc']],
             columns: [
-                { data: 'id', searchable: false, orderable: false},
-                { data: 'category_id', searchable: false, orderable: false},
-                { data: 'name', searchable: true, orderable: false},
-                { data: 'price', searchable: false, orderable: false},
-                { data: 'status', searchable: false, orderable: false},
+                { data: 'id', searchable: true, orderable: true},
+                { data: 'category_id', searchable: true, orderable: true},
+                { data: 'name', searchable: true, orderable: true},
+                { data: 'price', searchable: true, orderable: true},
+                { data: 'status', searchable: true, orderable: true},
                 { data: 'action', searchable: false, orderable: false}
             ],
             columnDefs: [{
