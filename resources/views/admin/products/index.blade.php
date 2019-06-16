@@ -64,7 +64,7 @@
             ajax: '{{$ajax}}',
             order: [[0,'desc']],
             columns: [
-                { data: 'id', searchable: true, orderable: true},
+                { data: 'id'},
                 { data: 'category_id', searchable: true, orderable: true},
                 { data: 'name', searchable: true, orderable: true},
                 { data: 'price', searchable: true, orderable: true},
@@ -76,7 +76,7 @@
               "searchable": false,
               "orderable": false,
               "data": null,
-              // "title": 'No.',
+              "title": 'No',
               "render": function (data, type, full, meta) {
                   return meta.settings._iDisplayStart + meta.row + 1; 
               }

@@ -7,6 +7,10 @@ use App\Model\Order;
 use App\Model\OrderDetail;
 use App\Model\Payment;
 use App\Model\Product;
+use App\Model\User;
+use DataTables;
+use Form;
+use Storage;
 
 class OrderController extends Controller
 {
@@ -17,8 +21,37 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders         = Order::all();
-        return view('admin.orders.index', compact('orders'));
+        $ajax       = route('orders.data');
+        $order      = Order::all();
+        $products   = Product::all();
+        $users      = User::all();
+        $payments   = Payment::all();
+        return view('admin.orders.index', compact('ajax', 'order', 'products', 'users', 'payments'));
+    }
+
+    public function data(Request $request)
+    {
+        $order = Order::all();
+        return DataTables::of($order)
+            ->editColumn('payment_id', function ($index) {
+                return isset($index->payment->name) ? $index->payment->name : '-';
+            })
+            ->editColumn('created_at', function ($index) {
+                    return $index->created_at->format('d M Y');
+            })
+            ->editColumn('total', function ($index) {
+                return 'Rp '.number_format($index->total, 0, ",", ".");
+            })
+            ->addColumn('action', function ($index) {
+                $tag = Form::open(array("url" => route('orders.destroy',$index->id), "method" => "DELETE"));
+                $tag .= "<a href=".route('orders.edit', $index->id)." class='btn btn-primary btn-xs' style='margin-right:0.3vw'>Edit</a>";
+                $tag .= "<button type='button' class='btn btn-default btn-xs detaildata' id=".$index->id." onclick='detail(".$index->id.")'  data-toggle='modal' data-target='#modal-baru' style='margin-right:0.3vw'>Detail</button>";
+                $tag .= "<button type='submit' class='delete btn btn-danger btn-xs'>Delete</button>";
+                $tag .= Form::close();
+                return $tag;
+            })
+            ->rawColumns(['id', 'action'])
+            ->make(true);
     }
 
     /**
@@ -44,9 +77,6 @@ class OrderController extends Controller
         $request->merge([
             'user_id'   => auth()->user()->id,
         ]);
-        // dd($request->discount);
-
-        // dd($request->email);
 
         if ($request->discount == null) {
             $dataOrder      = $request->only('table_number', 'payment_id', 'user_id', 'email', 'total');
@@ -81,7 +111,18 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order         = Order::find($id);
+        $order  = Order::find($id);
+        $detail = OrderDetail::where('order_id', $id)->get();
+        $data   = [
+            'order'     => $order,
+            'detail'    => $detail
+        ];
+        return response()->json($data);
+    }
+
+    public function print($id)
+    {
+        $order  = Order::find($id);
         return view('admin.orders.invoice', compact('order'));
     }
 

@@ -25,10 +25,7 @@ class ProductController extends Controller
     public function data(Request $request)
     {
          
-            $data = Product::select([
-                'id', 'category_id', 'name', 
-                'price', 'status'
-            ]);
+            $data = Product::select(['id', 'category_id', 'name', 'price', 'status']);
             return DataTables::of($data)
                 ->editColumn('category_id', function ($index) {
                     return isset($index->category->name) ? $index->category->name : '-';

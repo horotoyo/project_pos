@@ -174,7 +174,7 @@
 
 @section('script')
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+<script src="{{ asset('adminlte/dist/js/vue.min.js') }}"></script>
 <script>
     new Vue({
       el    : '#app',
@@ -202,8 +202,6 @@
           return subtotal;
         },
         formatPrice(value) {
-          // let val = (value/1).toFixed(2).replace('.', ',')
-            // return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
             return 'Rp '+value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         },
         product_price(product_id, index) {

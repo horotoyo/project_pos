@@ -20,7 +20,9 @@
   </style>
 @endsection
 
-@section('content')
+@section('content')  
+<div id="modal-pop">
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
@@ -28,7 +30,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('home.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Orders</li>
+    <li class="active ujicoba">Orders</li>
   </ol>
 </section>
 
@@ -48,10 +50,10 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="example1" class="table table-bordered table-hover">
+          <table id="table1" class="table table-bordered table-hover">
             <thead>
             <tr>
-              <th>No</th>
+              <th width="5%">No</th>
               <th>Table Number</th>
               <th>Total</th>
               <th>Payment Type</th>
@@ -60,158 +62,7 @@
             </tr>
             </thead>
             <tbody>
-            @php
-            	$nomor = 1;
-            @endphp
-            @foreach ($orders as $order)
-            <tr>
-            	<td width="20px">{{ $nomor++ }}</td>
-              <td>{{ $order->table_number }}</td>
-              <td>Rp {{ number_format($order->total, 0, ",", ".") }}</td>
-              <td>{{ $order->payment->name }}</td>
-            	<td>{{ $order->created_at->format('d M Y') }}</td>
-            	<td>
-            		<form method="post" action="{{ route('orders.destroy', $order->id) }}">
-            			@csrf
-            			@method('DELETE')
-                  <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#{{ $order->id }}">Detail</button>
-            			<a href="{{ route('orders.edit', $order->id) }}" class="btn btn-primary btn-xs">Edit</a>
-            			<button type="submit" class="btn btn-danger btn-xs">Delete</button>
-            		</form>
-
-                 <div class="modal fade" id="{{ $order->id }}">
-                  <div class="modal-dialog" style="width:900px;">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title"><b><i class="fa fa-shopping-cart"></i> Order Detail</b></h4>
-                      </div>
-                      <div class="modal-body">
-                          <!-- info row -->
-                          <div class="row invoice-info">
-                            <div class="col-sm-3 invoice-col">
-                              Order at
-                              <address>
-                                <strong>{{ $order->created_at->format('d M Y') }}</strong><br>
-                                <strong>{{ $order->created_at->format('H:m') }} WIB</strong>
-                              </address>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-3 invoice-col">
-                              Table Number
-                              <address>
-                                <strong>{{ $order->table_number }}</strong><br>
-                              </address>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-3 invoice-col">
-                              Customer Email
-                              <address>
-                                <strong>{{ $order->email }}</strong>
-                              </address>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-3 invoice-col">
-                              Chasieer
-                              <address>
-                                <strong>{{ $order->user->name }}</strong>
-                              </address>
-                            </div>
-                            <!-- /.col -->
-                          </div>
-                          <!-- /.row -->
-
-                          <!-- Table row -->
-                          <div class="row">
-                            <div class="col-xs-12 table-responsive">
-                              <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                  <th>No</th>
-                                  <th>Product Name</th>
-                                  <th>Note</th>
-                                  <th>Price</th>
-                                  <th>Qty</th>
-                                  <th>Subtotal</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @php
-                                  $no = 1;
-                                @endphp
-                                @foreach ($order->orderDetail as $detail)
-                                <tr>
-                                  <td>{{ $no++ }}</td>
-                                  <td>{{ $detail->product_name }}</td>
-                                  <td>{{ $detail->note }}</td>
-                                  <td>Rp {{ number_format($detail->product_price, 0, ",", ".") }}</td>
-                                  <td>{{ $detail->quantity }}</td>
-                                  <td>Rp {{ number_format($detail->subtotal, 0, ",", ".") }}</td>
-                                </tr>
-                                @endforeach
-                                </tbody>
-                              </table>
-                            </div>
-                            <!-- /.col -->
-                          </div>
-                          <!-- /.row -->
-
-                          <div class="row">
-                            <!-- accepted payments column -->
-                            <div class="col-xs-6">
-                              <p class="lead">Payment Methods: <b>{{ $order->payment->name }}</b></p>
-
-                              <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                  If you have a problem with our service, you can complain to our customer service or call 0879878223781.
-                              </p>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-xs-6">
-
-                              <div class="table-responsive">
-                                <table class="table">
-                                  <tr>
-                                    <th style="width:50%">Discount : </th>
-                                    <td>{{ number_format($order->discount) }}%</td>
-                                  </tr>
-                                  <tr>
-                                    <th style="width:50%">Total : </th>
-                                    <td>Rp {{ number_format($order->total, 0, ",", ".") }}</td>
-                                  </tr>
-                                </table>
-                              </div>
-                            </div>
-                            <!-- /.col -->
-                          </div>
-                          <!-- /.row -->
-
-                          <!-- this row will not appear when printing -->
-                          <div class="row no-print">
-                            <div class="col-xs-12">
-                              <form method="post" action="{{ route('send.mail', $order->id) }}">
-                                @csrf
-                                <a href="{{ route('orders.show', $order->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-envelope"></i> Send Mail</button>
-                                <button type="button" class="btn btn-danger pull-right" style="margin-right: 5px;" data-dismiss="modal" aria-label="Close">
-                                  <i class="fa fa-remove"></i> Cancel
-                                </button>
-{{--                                 <a href="" class="btn btn-primary pull-right" style="margin-right: 10px;"><i class="fa fa-download"></i> Generate PDF</a> --}}
-                              </form>
-                            </div>
-                          </div>
-                      
-                      </div>
-                    </div>
-                    <!-- /.modal-content -->
-                  </div>
-                  <!-- /.modal-dialog -->
-                </div>
-                <!-- /.modal -->
-
-            	</td>
-            </tr>
-            @endforeach
+            
             </tbody>
           </table>
         </div>
@@ -222,6 +73,115 @@
     <!-- /.col -->
   </div>
   <!-- /.row -->
+  @include('admin.orders.detail')
+
 </section>
 <!-- /.content -->
+</div>
+@endsection
+
+@section('script')
+  <script src="{{ asset('adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+  <script src="{{ asset('adminlte/dist/js/custom.js') }}"></script>
+  <script src="{{ asset('adminlte/dist/js/vue.min.js') }}"></script>
+  <script src="{{ asset('adminlte/dist/js/axios.min.js') }}"></script>
+  <script type="text/javascript">
+
+    function detail(id) {
+      vue.getData(id);
+      $('.sendmail').attr('action', null);
+      $('.sendmail').attr('action', '{{ url('/') }}/sendmail/'+id);
+
+      $('.printinvoice').attr('href', null);
+      $('.printinvoice').attr('href', '{{ url('/') }}/orders/'+id+'/print');
+    };
+
+    var vue = new Vue({
+      el: '#modal-pop',
+      data: {
+        orders: [],
+        test: 1
+      },
+      methods: {
+        getData(id) {
+          axios.get("{{ url('/') }}"+'/orders/'+id)
+          .then(function(response) {
+            vue.orders = response.data;
+            // console.log(response.data);
+          })
+          .catch(function(error) {
+            alert(JSON.stringify(error));
+          });
+        },
+        formatPrice(value) {
+            return 'Rp '+value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        },
+        formatDate(value) {
+          return moment(String(value)).format('D-M-Y H:m');
+        },
+        userName(value) {
+          var name    = this.users[value];
+          return name.replace(value, name);
+        },
+        paymentName(value) {
+          var name    = this.payments[value];
+          return name.replace(value, name);
+        },
+      },
+      computed: {
+        users() {
+          var users  = [];
+          users[0]   = 'undefined';
+
+          @foreach ($users as $user)
+            users[{{ $user->id }}] = '{{ $user->name }}'
+          @endforeach
+
+          return users;
+        },
+        payments() {
+          var payments  = [];
+          payments[0]   = 'undefined';
+
+          @foreach ($payments as $payment)
+            payments[{{ $payment->id }}] = '{{ $payment->name }}'
+          @endforeach
+
+          return payments;
+        },
+      },
+
+    });
+
+    var table;
+    $(document).ready(function() {
+        table = $('#table1').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{$ajax}}',
+            order: [[0,'desc']],
+            columns: [
+                { data: 'id'},
+                { data: 'table_number', searchable: true, orderable: true},
+                { data: 'total', searchable: true, orderable: true},
+                { data: 'payment_id', searchable: true, orderable: true},
+                { data: 'created_at', searchable: true, orderable: true},
+                { data: 'action', searchable: false, orderable: false}
+            ],
+            columnDefs: [{
+              "targets": 0,
+              "searchable": false,
+              "orderable": false,
+              "data": null,
+              "title": 'No',
+              "render": function (data, type, full, meta) {
+                  return meta.settings._iDisplayStart + meta.row + 1; 
+              }
+            }],
+        });
+
+    });
+
+  </script>
 @endsection

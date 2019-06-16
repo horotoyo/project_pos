@@ -71,7 +71,7 @@
               "searchable": false,
               "orderable": false,
               "data": null,
-              // "title": 'No.',
+              "title": 'No',
               "render": function (data, type, full, meta) {
                   return meta.settings._iDisplayStart + meta.row + 1; 
               }
