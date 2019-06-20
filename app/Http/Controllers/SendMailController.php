@@ -12,10 +12,9 @@ use App\Model\Category;
 
 class SendMailController extends Controller
 {
-    public function sendMail($id)
+    public function sendMailInvoice($id)
     {
     	$orders 	= Order::find($id);
-    	// dd($orders);
 		Mail::to($orders)->send(new OrderShipped($id));
 		return redirect('/orders')->with('success', 'Email telah dikirim');
     }

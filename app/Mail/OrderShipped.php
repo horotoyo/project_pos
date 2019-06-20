@@ -29,7 +29,6 @@ class OrderShipped extends Mailable
      */
     public function build()
     {
-        // return $this->view('admin.order.invoice');
         $order = Order::find($this->id);
         return $this->from('suryowidiyantogm@gmail.com')
                     ->view('admin.orders.invoice', compact('order'));

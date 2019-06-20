@@ -14,6 +14,11 @@ use Storage;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only('index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,11 +27,11 @@ class OrderController extends Controller
     public function index()
     {
         $ajax       = route('orders.data');
-        $order      = Order::all();
+        $orders     = Order::all();
         $products   = Product::all();
         $users      = User::all();
         $payments   = Payment::all();
-        return view('admin.orders.index', compact('ajax', 'order', 'products', 'users', 'payments'));
+        return view('admin.orders.index', compact('ajax', 'orders', 'products', 'users', 'payments'));
     }
 
     public function data(Request $request)
@@ -44,13 +49,21 @@ class OrderController extends Controller
             })
             ->addColumn('action', function ($index) {
                 $tag = Form::open(array("url" => route('orders.destroy',$index->id), "method" => "DELETE"));
-                $tag .= "<a href=".route('orders.edit', $index->id)." class='btn btn-primary btn-xs' style='margin-right:0.3vw'>Edit</a>";
-                $tag .= "<button type='button' class='btn btn-default btn-xs detaildata' id=".$index->id." onclick='detail(".$index->id.")'  data-toggle='modal' data-target='#modal-baru' style='margin-right:0.3vw'>Detail</button>";
-                $tag .= "<button type='submit' class='delete btn btn-danger btn-xs'>Delete</button>";
+                // $tag .= "<a href=".route('orders.edit', $index->id)." class='btn btn-primary btn-xs' style='margin-right:0.3vw'>Edit</a>";
+                $tag .= "<button type='button' class='btn btn-default btn-xs detaildata' onclick='detail(".$index->id.")'  data-toggle='modal' data-target='#modal-baru' style='margin-right:0.3vw'>Detail</button>";
+                $tag .= "<button type='submit' class='deletedata btn btn-danger btn-xs'>Delete</button>";
                 $tag .= Form::close();
                 return $tag;
             })
             ->rawColumns(['id', 'action'])
+            ->setRowAttr([
+                'id'    => function($index){
+                        return $index->id;
+                },
+                'class' => function(){
+                        return 'yajraraw';
+                }
+            ])
             ->make(true);
     }
 
@@ -178,8 +191,14 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        Order::find($id)->delete();
-        return redirect('/orders');
+        $tb = Order::findOrFail($id);
+        $tb->delete();
+        return redirect('/orders')->with('success', 'Anda telah berhasil menghapus data!');
+        // return response()->json(['msg' => true,'success' => trans('message.delete')]);
+        // $tb = Order::findOrFail($id);
+        // $tb->delete();
+        // return response()->json(['msg' => true,'success' => trans('message.delete')]);
+
     }
 
 }

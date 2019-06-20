@@ -37,6 +37,9 @@
 <!-- Main content -->
 <section class="content">
   <div class="row">
+{{--     @foreach ($order as $detail)
+      {{ $detail->id }}
+    @endforeach --}}
     <div class="col-xs-12">
       @if ($message = Session::get('success'))
         <div class="alert alert-success alert-block">
@@ -61,7 +64,7 @@
               <th>Action</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="delete">
             
             </tbody>
           </table>
@@ -97,11 +100,79 @@
       $('.printinvoice').attr('href', '{{ url('/') }}/orders/'+id+'/print');
     };
 
+    // // any time any element with the 'delete_class' on it is clicked, then
+    // $(document).on('click', '.deletedata', function(e) {
+    //   var row = $(this).closest('tr');
+
+    //   var data = {
+    //     table: $('[name="table_name"]').val(),
+    //     id: $('[name="restaurant_id"]').val()
+    //   };
+
+    //   $.post(del.php, data, function(r) {
+    //     // do some special stuff with your json response 'r' (javascript object)
+    //     ...
+
+    //     // do what you showed us you are doing, displaying a message
+    //     $('#message').html("<h2>Contact Form Submitted!</h2>")
+    //       .append("<p>Entry is Deleted </p>")
+    //       .hide();
+
+    //     // remove the row, since it is gone from the DB
+    //     row.remove();
+    //   }, 'json');
+    // });
+
+    function formDelete(id) {
+      // $('#'+id).remove();
+      // vue.deleteData(id);
+      // $('.delete tr').splice(0, 0);
+      // $('.delete tr').attr('id', id);
+      // $('#'+id).html('kl');
+    };
+
+    // $(document).on('click','.deletedata',function(e){
+    //   e.preventDefault();
+    //   var CSRF_TOKEN  = $('input[name="_token"]').attr('value');
+    //   var METHOD      = $('input[name="_method"]').attr('value');
+    //   var url         = $(this).closest('form').attr('action');;
+    //   if(confirm('Are you sure want to delete ?')) {
+    //     $.ajaxSetup({
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         }
+    //     });
+    //     $.ajax({
+    //       url: url,
+    //       type: 'post',
+    //       dataType: 'json',
+    //       data: {
+    //           _method: 'POST',
+    //           submit: true
+    //       },
+    //       success : function(data){
+    //       if(data.msg) {
+    //         console.log(data.msg);
+    //           // table.draw(false);
+    //           table.ajax.reload();
+    //         }
+    //       }
+    //     }).always(function(data) {
+    //         // $('#dataTableBuilder').DataTable().draw(false);
+    //     });
+        
+    //   } else {
+    //     // alert('gagal');
+    //   }
+    // });
+
+
     var vue = new Vue({
       el: '#modal-pop',
       data: {
         orders: [],
-        test: 1
+        test: 1,
+        row: ''
       },
       methods: {
         getData(id) {
@@ -114,6 +185,22 @@
             alert(JSON.stringify(error));
           });
         },
+        // deleteData(id) {
+          // axios.delete("{ url('/') }"+'/orders/'+id);
+
+          // .then(function(response) {
+          //   vue.orders['order'].splice(id);
+          //   // alert(id);
+          // })
+          // .catch(function(error) {
+          //   alert(JSON.stringify(error));
+          // });
+            // console.log(vue.orders);
+          // vue.orders['order'].filter(function(order){
+            // return order.id == id;
+          // }).splice(0);
+
+        // },
         formatPrice(value) {
             return 'Rp '+value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         },
@@ -128,6 +215,9 @@
           var name    = this.payments[value];
           return name.replace(value, name);
         },
+        getRow() {
+
+        }
       },
       computed: {
         users() {
@@ -149,7 +239,7 @@
           @endforeach
 
           return payments;
-        },
+        }
       },
 
     });
@@ -178,7 +268,10 @@
               "render": function (data, type, full, meta) {
                   return meta.settings._iDisplayStart + meta.row + 1; 
               }
-            }],
+            }]
+            // createdRow: (function( row, data, dataIndex ) {
+            //   $(row).attr('id', );
+            // }),
         });
 
     });
