@@ -8,7 +8,7 @@
     <img src="{{ asset('favicon2.ico') }}" width="60px">
   </div>
   <div class="login-logo">
-    <a href="{{ asset('adminlte/index2.html') }}"><b>De</b>Latte<small>.com</small></a>
+    <a href="{{ route('login') }}"><b>De</b>Latte<small>.com</small></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
